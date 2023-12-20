@@ -1,0 +1,19 @@
+{
+  "neighborhoods": [
+    { "name": "Kartaltepe", "latitude": 40.985000, "longitude": 28.878139 },
+    { "name": "Şenlikköy", "latitude": 40.975972, "longitude": 28.795694 },
+    { "name": "Ataköy 7-8-9-10. Kısım", "latitude": 40.985528, "longitude": 28.846944 },
+    { "name": "Osmaniye", "latitude": 40.994750, "longitude": 28.876167 },
+    { "name": "Yeşilköy", "latitude": 40.962472, "longitude": 28.824833 },
+    { "name": "Zuhuratbaba", "latitude": 40.990028, "longitude": 28.867778 },
+    { "name": "Ataköy 2-5-6. Kısım", "latitude": 40.976500, "longitude": 28.861333 },
+    { "name": "Ataköy 3-4-11. Kısım", "latitude": 40.985861, "longitude": 28.856972 },
+    { "name": "Sakızağacı", "latitude": 40.978250, "longitude": 28.879833 },
+    { "name": "Yeşilyurt", "latitude": 40.964917, "longitude": 28.841528 },
+    { "name": "Yenimahalle", "latitude": 40.980556, "longitude": 28.881472 },
+    { "name": "Basınköy", "latitude": 40.977861, "longitude": 28.775083 },
+    { "name": "Zeytinlik", "latitude": 40.977194, "longitude": 28.873722 },
+    { "name": "Cevizlik", "latitude": 40.979111, "longitude": 28.876028 },
+    { "name": "Ataköy 1. Kısım", "latitude": 40.977667, "longitude": 28.867472 }
+  ]
+}

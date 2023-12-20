@@ -1,0 +1,499 @@
+{
+    "info": {
+        "statuscode": 0,
+        "copyright": {
+            "text": "© 2023 MapQuest, Inc.",
+            "imageUrl": "http://api.mqcdn.com/res/mqlogo.gif",
+            "imageAltText": "© 2023 MapQuest, Inc."
+        },
+        "messages": []
+    },
+    "time": [
+        [0, 782, 431, 284, 572, 283, 302, 279, 151, 528, 203, 824, 321, 149, 266],
+        [838, 0, 700, 816, 453, 763, 584, 620, 771, 510, 743, 250, 696, 714, 601],
+        [475, 648, 0, 378, 438, 325, 260, 146, 438, 394, 493, 690, 363, 381, 276],
+        [250, 904, 443, 0, 694, 225, 408, 398, 384, 650, 325, 843, 427, 382, 372],
+        [658, 392, 520, 677, 0, 624, 404, 440, 591, 330, 563, 434, 516, 534, 421],
+        [255, 762, 388, 236, 552, 0, 261, 236, 355, 508, 410, 804, 280, 298, 225],
+        [317, 559, 305, 466, 349, 313, 0, 159, 247, 305, 302, 601, 172, 190, 77],
+        [347, 597, 151, 304, 387, 244, 148, 0, 326, 343, 381, 639, 251, 269, 164],
+        [140, 697, 463, 408, 487, 392, 251, 317, 0, 443, 104, 739, 170, 135, 246],
+        [569, 501, 431, 588, 215, 535, 315, 351, 502, 0, 474, 543, 427, 445, 332],
+        [208, 721, 487, 404, 511, 460, 275, 341, 120, 467, 0, 763, 231, 190, 270],
+        [893, 410, 755, 862, 481, 809, 639, 675, 826, 565, 798, 0, 751, 769, 656],
+        [282, 605, 371, 485, 395, 341, 159, 225, 156, 351, 246, 647, 0, 209, 154],
+        [194, 697, 463, 462, 487, 446, 251, 317, 103, 443, 158, 739, 176, 0, 246],
+        [295, 571, 291, 444, 361, 299, 70, 145, 225, 317, 280, 613, 150, 168, 0]
+    ],
+    "distance": [
+        [0, 7.0271, 2.0605, 1.0924, 4.769, 1.28, 1.4596, 1.3633, 0.5804, 4.244, 1.0936, 7.723, 1.3596, 0.5356, 1.1626],
+        [7.2632, 0, 5.5029, 6.6748, 3.3337, 6.3784, 4.8082, 5.2009, 5.8813, 3.4474, 6.456, 1.5118, 5.5787, 5.647, 5.1611],
+        [2.2755, 5.2152, 0, 2.2481, 2.9571, 1.9517, 1.623, 0.6207, 2.1729, 2.432, 2.3755, 5.9111, 1.8703, 1.9387, 1.5224],
+        [0.9942, 7.4074, 2.7502, 0, 5.1493, 0.8892, 2.0878, 1.9915, 1.5298, 4.6242, 1.4739, 7.8361, 1.9878, 1.4851, 1.7908],
+        [5.6464, 2.3494, 3.8861, 5.2295, 0, 4.9331, 3.1914, 3.5841, 4.2645, 1.8306, 4.8392, 3.0453, 3.9619, 4.0302, 3.5443],
+        [0.8917, 6.0677, 1.9287, 0.9979, 3.8096, 0, 1.4086, 1.2316, 1.6112, 3.2846, 1.8138, 6.7636, 1.3086, 1.377, 1.1116],
+        [1.4478, 5.1263, 1.769, 2.3277, 2.8682, 1.5944, 0, 1.1011, 1.0843, 2.3432, 1.2869, 5.8222, 0.7817, 0.85, 0.3641],
+        [1.6224, 5.1021, 0.6941, 2.0313, 2.844, 1.2403, 1.0768, 0, 1.6267, 2.319, 1.8293, 5.798, 1.3241, 1.3925, 0.9762],
+        [0.5474, 6.2553, 2.9838, 2.3407, 3.9973, 1.7119, 1.7106, 2.3159, 0, 3.4722, 0.3654, 6.9513, 0.714, 0.425, 1.5659],
+        [4.395, 3.4269, 2.6346, 3.978, 1.0315, 3.6816, 1.9399, 2.3326, 3.013, 0, 3.5878, 4.1228, 2.7104, 2.7788, 2.2929],
+        [0.8208, 6.2585, 2.9869, 2.2792, 4.0004, 1.9853, 1.7137, 2.319, 0.3939, 3.4753, 0, 6.9544, 1.1968, 0.6257, 1.569],
+        [7.9467, 2.9496, 6.1864, 7.7852, 3.3132, 7.4888, 5.4917, 5.8844, 6.5648, 4.1309, 7.1396, 0, 6.2622, 6.3305, 5.8446],
+        [1.0483, 5.3512, 2.0797, 2.2289, 3.0932, 1.4285, 0.8065, 1.4118, 0.5381, 2.5681, 0.8662, 6.0472, 0, 0.7512, 0.6618],
+        [0.6916, 5.7912, 2.5197, 1.715, 3.5331, 1.856, 1.2465, 1.8517, 0.307, 3.0081, 0.5095, 6.4871, 0.6326, 0, 1.1017],
+        [1.1446, 5.017, 1.6249, 2.0244, 2.7589, 1.4503, 0.3579, 0.9569, 0.7811, 2.2338, 0.9836, 5.7129, 0.4785, 0.5468, 0]
+    ],
+    "locations": [
+        {
+            "street": "9 Koşuyolu Caddesi",
+            "adminArea6": "Kartaltepe",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34145",
+            "geocodeQualityCode": "P1AAA",
+            "geocodeQuality": "POINT",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.985,
+                "lng": 28.87814
+            },
+            "displayLatLng": {
+                "lat": 40.98507,
+                "lng": 28.87799
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "29B Orman Sokak",
+            "adminArea6": "Şenlikköy",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34153",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97594,
+                "lng": 28.79566
+            },
+            "displayLatLng": {
+                "lat": 40.97601,
+                "lng": 28.79557
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "Çobançeşme E5 Yan Yol Caddesi",
+            "adminArea6": "Ataköy 7-8-9-10. Kısım",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34158",
+            "geocodeQualityCode": "P1AAA",
+            "geocodeQuality": "POINT",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.98552,
+                "lng": 28.847
+            },
+            "displayLatLng": {
+                "lat": 40.99038,
+                "lng": 28.83403
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "5/12F Çağlar Sokak",
+            "adminArea6": "Osmaniye",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34146",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.99476,
+                "lng": 28.87612
+            },
+            "displayLatLng": {
+                "lat": 40.99417,
+                "lng": 28.87594
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "Yeşilköy Halkalı Caddesi",
+            "adminArea6": "Yeşilköy",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34149",
+            "geocodeQualityCode": "P1AAA",
+            "geocodeQuality": "POINT",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.96222,
+                "lng": 28.82488
+            },
+            "displayLatLng": {
+                "lat": 40.96235,
+                "lng": 28.8249
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "19 Yavuzevler Mektep Sokak",
+            "adminArea6": "Zuhuratbaba",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34147",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.99004,
+                "lng": 28.8677
+            },
+            "displayLatLng": {
+                "lat": 40.98996,
+                "lng": 28.86769
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "8/1 Ali Rıza Efendi Caddesi",
+            "adminArea6": "Ataköy 2-5-6. Kısım",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34158",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97649,
+                "lng": 28.86149
+            },
+            "displayLatLng": {
+                "lat": 40.97652,
+                "lng": 28.8615
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "35/1 Behçet Kemal Çağlar Caddesi",
+            "adminArea6": "Ataköy 3-4-11. Kısım",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34158",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.98612,
+                "lng": 28.85679
+            },
+            "displayLatLng": {
+                "lat": 40.98603,
+                "lng": 28.85701
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "10 Yurt Sahibi Sokak",
+            "adminArea6": "Sakızağacı",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34142",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97826,
+                "lng": 28.87983
+            },
+            "displayLatLng": {
+                "lat": 40.97819,
+                "lng": 28.87985
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "26 Ürgüplü Caddesi",
+            "adminArea6": "Yeşilyurt",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34149",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.96501,
+                "lng": 28.84158
+            },
+            "displayLatLng": {
+                "lat": 40.96496,
+                "lng": 28.84173
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "22A General Kani Elitez Sokak",
+            "adminArea6": "Yenimahalle",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34142",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.98057,
+                "lng": 28.88148
+            },
+            "displayLatLng": {
+                "lat": 40.98057,
+                "lng": 28.88151
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "31C İstanbul Caddesi",
+            "adminArea6": "Basınköy",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34153",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97787,
+                "lng": 28.77509
+            },
+            "displayLatLng": {
+                "lat": 40.97788,
+                "lng": 28.77514
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "13 Taşevler Sokak",
+            "adminArea6": "Zeytinlik",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34140",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97719,
+                "lng": 28.8737
+            },
+            "displayLatLng": {
+                "lat": 40.97711,
+                "lng": 28.87373
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "10 İzzet Molla Sokak",
+            "adminArea6": "Cevizlik",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34142",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.9791,
+                "lng": 28.87604
+            },
+            "displayLatLng": {
+                "lat": 40.97905,
+                "lng": 28.87605
+            },
+            "mapUrl": ""
+        },
+        {
+            "street": "2 General Naci Tınaztepe Caddesi",
+            "adminArea6": "Ataköy 1. Kısım",
+            "adminArea6Type": "Neighborhood",
+            "adminArea5": "Bakırköy",
+            "adminArea5Type": "City",
+            "adminArea4": "İstanbul",
+            "adminArea4Type": "County",
+            "adminArea3": "",
+            "adminArea3Type": "State",
+            "adminArea1": "TR",
+            "adminArea1Type": "Country",
+            "postalCode": "34158",
+            "geocodeQualityCode": "L1AAA",
+            "geocodeQuality": "ADDRESS",
+            "dragPoint": false,
+            "sideOfStreet": "N",
+            "linkId": "0",
+            "unknownInput": "",
+            "type": "s",
+            "latLng": {
+                "lat": 40.97763,
+                "lng": 28.86751
+            },
+            "displayLatLng": {
+                "lat": 40.97774,
+                "lng": 28.86774
+            },
+            "mapUrl": ""
+        }
+    ],
+    "allToAll": true,
+    "manyToOne": false
+}
