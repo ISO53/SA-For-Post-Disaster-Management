@@ -4,14 +4,14 @@
     {"status": "001001110", "latitude": 40.985528, "longitude": 28.846944},
     {"status": "110000111", "latitude": 40.99475, "longitude": 28.876167},
     {"status": "000100000", "latitude": 40.962472, "longitude": 28.824833},
-    {"status": "011111100", "latitude": 40.990028, "longitude": 28.867778},
+    {"status": "110111100", "latitude": 40.990028, "longitude": 28.867778},
     {"status": "100010100", "latitude": 40.9765, "longitude": 28.861333},
-    {"status": "011000101", "latitude": 40.985861, "longitude": 28.856972},
+    {"status": "010000101", "latitude": 40.985861, "longitude": 28.856972},
     {"status": "101010111", "latitude": 40.97825, "longitude": 28.879833},
     {"status": "110000101", "latitude": 40.964917, "longitude": 28.841528},
     {"status": "001000111", "latitude": 40.980556, "longitude": 28.881472},
     {"status": "010111001", "latitude": 40.977861, "longitude": 28.775083},
-    {"status": "111000100", "latitude": 40.977194, "longitude": 28.873722},
+    {"status": "110000100", "latitude": 40.977194, "longitude": 28.873722},
     {"status": "011011100", "latitude": 40.979111, "longitude": 28.876028},
-    {"status": "011000111", "latitude": 40.977667, "longitude": 28.867472}
+    {"status": "110000111", "latitude": 40.977667, "longitude": 28.867472}
 ]
