@@ -1,29 +1,11 @@
 package com.iso53;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Scheduler {
-
-    public static void main(String[] args) {
-        ArrayList<Incident> incidents = new ArrayList<>(ProblemData.INCIDENTS);
-        ArrayList<Unit> units = new ArrayList<>(ProblemData.UNITS);
-
-//        Collections.shuffle(incidents);
-//        Collections.shuffle(units);
-
-        ArrayList<LinkedList<String>> result = schedule(incidents, units);
-
-        System.out.println("\n------ RESULT ------");
-        for (int i = 0; i < result.size(); i++) {
-            System.out.print("Unit " + i + " ==>  ");
-            for (String incidentStr : result.get(i)) {
-                System.out.print(incidentStr + " -> ");
-            }
-            System.out.println();
-        }
-    }
 
     static double DISTANCE_COEFFICIENT = 0.2 * 0.15; // 1-5
     static double PROCESS_TIME_COEFFICIENT = 0.004 * 0.25; // 10-240
@@ -53,6 +35,7 @@ public class Scheduler {
 
             // Iterate units to find the best one
             for (int j = 0; j < unitWrappers.size(); j++) {
+
                 char[] result = new char[inc.status.length()];
                 int sumOfHandledSeverity = handle(result, inc.status, unitWrappers.get(j).unit.type);
 
@@ -83,9 +66,12 @@ public class Scheduler {
             // Handle incident with best unit
             char[] handledIncident = inc.status.toCharArray();
             handle(handledIncident, inc.status, bestUnit.type);
+            String resultBar = bar('d', ProblemData.DISTANCE_MATRIX[unitWrappers.get(bestUnitIndex).unit.lastLocationIndex][inc.index]) + " " + bar('p', ProblemData.PROCESS_TIME_AND_CAPABILITIES[unitWrappers.get(bestUnitIndex).unit.getUnitType()][inc.getUnitType()]);
+            finalResult.get(bestUnitIndex).add(resultBar);
             bestUnit.lastLocationIndex = inc.index;
+            unitWrappers.get(bestUnitIndex).waitTime = 0;
 //            finalResult.get(bestUnitIndex).add(inc.status);
-            finalResult.get(bestUnitIndex).add(inc.index + "");
+//            finalResult.get(bestUnitIndex).add(inc.index + "");
             System.out.println(inc.status + " | " + bestUnit.type + " | " + String.valueOf(handledIncident));
             inc.status = String.valueOf(handledIncident);
 
@@ -131,6 +117,19 @@ public class Scheduler {
         }
 
         return index;
+    }
+
+    public static String bar(char type, double length) {
+        if (type == 'd') {
+            char[] chars = new char[(int) (length)];
+            Arrays.fill(chars, '_');
+            return new String(chars);
+        } else if (type == 'p') {
+            char[] chars = new char[(int) (length / 5)];
+            Arrays.fill(chars, '#');
+            return new String(chars);
+        }
+        return null;
     }
 
     public static class UnitWrapper {

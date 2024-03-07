@@ -58,6 +58,8 @@ public class Utils {
                             )
                     );
                 }
+            } else {
+                System.out.println("File not found: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,6 +80,8 @@ public class Utils {
                 for (int i = 0; i < unitsAsJsonArr.size(); i++) {
                     units.add(new Unit(unitsAsJsonArr.get(i).getAsJsonObject().get("type").getAsString()));
                 }
+            } else {
+                System.out.println("File not found: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,6 +103,8 @@ public class Utils {
                 for (int i = 0; i < namesAsJsonArr.size(); i++) {
                     names.add(namesAsJsonArr.get(i).getAsString());
                 }
+            } else {
+                System.out.println("File not found: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,6 +137,8 @@ public class Utils {
                         processTimeAndCapabilities[i][j] = rowArray.get(j).getAsDouble();
                     }
                 }
+            } else {
+                System.out.println("File not found: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
