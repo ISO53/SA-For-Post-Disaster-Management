@@ -1,10 +1,34 @@
 package com.iso53;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-//        printData();
+        printData();
+
+        System.out.println("\n------------- TEST BEGINS -------------\n");
+
+        ArrayList<Incident> incidents = new ArrayList<>(ProblemData.INCIDENTS);
+        ArrayList<Unit> units = new ArrayList<>(ProblemData.UNITS);
+
+//        Collections.shuffle(incidents);
+//        Collections.shuffle(units);
+
+        ArrayList<LinkedList<String>> result = Scheduler.schedule(incidents, units);
+
+        System.out.println("\n------ RESULT ------");
+        for (int i = 0; i < result.size(); i++) {
+            System.out.print("Unit " + i + " ==>  ");
+            for (String incidentStr : result.get(i)) {
+                if (!incidentStr.isEmpty()) {
+                    System.out.print(incidentStr + " "); //  + " -> "
+                }
+            }
+            System.out.println();
+        }
     }
 
     public static void printData() {
