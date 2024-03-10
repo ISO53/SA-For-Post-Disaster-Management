@@ -8,7 +8,6 @@ public class Unit {
     public Unit(String type) {
         this.type = type;
         this.name = getNameFromType(type);
-        this.lastLocationIndex = 14;
     }
 
     private static String getNameFromType(String type) {
@@ -36,6 +35,6 @@ public class Unit {
 
     @Override
     public String toString() {
-        return String.format("Type: %s, Name: %s", this.type, this.name);
+        return String.format("\nType: %s, Name: %s", this.type, this.name);
     }
 }

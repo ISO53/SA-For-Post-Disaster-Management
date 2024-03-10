@@ -29,6 +29,8 @@ public class Main {
             }
             System.out.println();
         }
+        solution.printSolution();
+
     }
 
     public static void printData() {
@@ -41,11 +43,11 @@ public class Main {
         System.out.println("-------- Unit Names Ended --------\n");
 
         System.out.println("------- Incidents Started -------");
-        ProblemData.INCIDENTS.forEach(System.out::println);
+        System.out.println(Arrays.toString(ProblemData.INCIDENTS));
         System.out.println("-------- Incidents Ended --------\n");
 
         System.out.println("------- Units Started -------");
-        ProblemData.UNITS.forEach(System.out::println);
+        System.out.println(Arrays.toString(ProblemData.UNITS));
         System.out.println("-------- Units  Ended --------\n");
 
         System.out.println("------- Distance Matrix Started -------");
@@ -54,6 +56,6 @@ public class Main {
 
         System.out.println("------ Process Time and Capabilities Started ------");
         Utils.printMatrix(ProblemData.PROCESS_TIME_AND_CAPABILITIES);
-        System.out.println("------- Process Time and Capabilities Ended -------");
+        System.out.println("------- Process Time and Capabilities Ended -------\n");
     }
 }

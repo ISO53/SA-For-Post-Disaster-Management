@@ -1,5 +1,7 @@
 package com.iso53;
 
+import java.util.Arrays;
+
 public class Incident {
 
     /**
@@ -45,14 +47,26 @@ public class Incident {
 
         if (!piece1.equals("000")) {
             sb.append(ProblemData.INCIDENT_NAMES[0]).append(", ");
+        } else {
+            char[] spaces = new char[ProblemData.INCIDENT_NAMES[0].length()];
+            Arrays.fill(spaces, ' ');
+            sb.append(spaces).append(", ");
         }
 
         if (!piece2.equals("000")) {
             sb.append(ProblemData.INCIDENT_NAMES[1]).append(", ");
+        } else {
+            char[] spaces = new char[ProblemData.INCIDENT_NAMES[1].length()];
+            Arrays.fill(spaces, ' ');
+            sb.append(spaces).append(", ");
         }
 
         if (!piece3.equals("000")) {
             sb.append(ProblemData.INCIDENT_NAMES[2]).append(", ");
+        } else {
+            char[] spaces = new char[ProblemData.INCIDENT_NAMES[2].length()];
+            Arrays.fill(spaces, ' ');
+            sb.append(spaces).append(", ");
         }
 
         return sb.delete(sb.length() - 2, sb.length()).toString();
@@ -64,6 +78,6 @@ public class Incident {
 
     @Override
     public String toString() {
-        return String.format("(%.6f, %.6f) | Status: %s | Name: %s | Index: %d", this.lat, this.lon, this.status, this.name, this.index);
+        return String.format("\n(%.6f, %.6f) | Status: %s | Name: %s | Index: %d", this.lat, this.lon, this.status, this.name, this.index);
     }
 }
