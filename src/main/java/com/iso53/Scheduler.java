@@ -139,6 +139,77 @@ public class Scheduler {
         public UnitWrapper(Unit unit, int waitTime) {
             this.unit = unit;
             this.waitTime = waitTime;
+    public static class Event {
+
+        private final double distanceTime;
+        private final double processTime;
+        private final double handledSeverityPoint;
+        private final double waitValue;
+        private final String result;
+        private final double score;
+        private final String unitType;
+        private final String incidentStatus;
+
+        public Event(double distanceTime, double processTime, double handledSeverityPoint, double waitValue, String result, String unitType, String incidentStatus) {
+            this.distanceTime = distanceTime;
+            this.processTime = processTime;
+            this.handledSeverityPoint = handledSeverityPoint;
+            this.waitValue = waitValue;
+            this.result = result;
+            this.score = calculateScore();
+            this.unitType = unitType;
+            this.incidentStatus = incidentStatus;
+        }
+
+        public double getDistanceTime() {
+            return distanceTime;
+        }
+
+        public double getProcessTime() {
+            return processTime;
+        }
+
+        public double getHandledSeverityPoint() {
+            return handledSeverityPoint;
+        }
+
+        public double getWaitValue() {
+            return waitValue;
+        }
+
+        public String getResult() {
+            return result;
+        }
+
+        public double getScore() {
+            return score;
+        }
+
+        private double calculateScore() {
+            // If this unit can't handle that incident make the result MAX because we're looking for the minimum result
+            // value
+            if (this.handledSeverityPoint == 1) {
+                return Double.MAX_VALUE;
+            }
+
+            return this.handledSeverityPoint * SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT +
+                    this.distanceTime * DISTANCE_COEFFICIENT +
+                    this.processTime * PROCESS_TIME_COEFFICIENT +
+                    (3 - this.waitValue) * WAIT_COEFFICIENT; //şimdilik
+        }
+
+        public String bar() {
+            // Show distance as '_' and process as '#' character
+            return "_".repeat((int) (this.distanceTime * 10) + 1) +
+                    "|".repeat((int) (this.processTime * 10) + 1);
+        }
+
+        public String getUnitType() {
+            return unitType;
+        }
+
+        public String getIncidentStatus() {
+            return incidentStatus;
         }
     }
 }
