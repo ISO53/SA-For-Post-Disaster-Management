@@ -3,7 +3,7 @@ package com.iso53;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,24 +11,15 @@ public class Main {
 
         System.out.println("\n------------- TEST BEGINS -------------\n");
 
-        ArrayList<Incident> incidents = new ArrayList<>(ProblemData.INCIDENTS);
-        ArrayList<Unit> units = new ArrayList<>(ProblemData.UNITS);
+        List<Incident> incidents = Arrays.asList(ProblemData.INCIDENTS.clone());
 
-//        Collections.shuffle(incidents);
-//        Collections.shuffle(units);
+        Collections.shuffle(incidents);
 
-        ArrayList<LinkedList<String>> result = Scheduler.schedule(incidents, units);
+        // create copies so original data remains unchanged
+        Scheduler.Solution solution = Scheduler.schedule(incidents.toArray(new Incident[0]), ProblemData.UNITS.clone());
+        System.out.println("\n-------------- TEST ENDS --------------\n");
 
         System.out.println("\n------ RESULT ------");
-        for (int i = 0; i < result.size(); i++) {
-            System.out.print("Unit " + i + " ==>  ");
-            for (String incidentStr : result.get(i)) {
-                if (!incidentStr.isEmpty()) {
-                    System.out.print(incidentStr + " "); //  + " -> "
-                }
-            }
-            System.out.println();
-        }
         solution.printSolution();
 
     }
