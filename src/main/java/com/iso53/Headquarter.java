@@ -2,9 +2,9 @@ package com.iso53;
 
 public class Headquarter {
 
-    private final double lat;
-    private final double lon;
-    private final int index;
+    public final double lat;
+    public final double lon;
+    public final int index;
 
     public Headquarter(int index, double lat, double lon) {
         this.index = index;
