@@ -2,9 +2,8 @@ package com.iso53;
 
 public class Unit {
 
-    String type;
-    String name;
-    int lastLocationIndex;
+    final String type;
+    final String name;
 
     public Unit(String type) {
         this.type = type;
