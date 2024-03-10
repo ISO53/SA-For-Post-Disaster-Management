@@ -3,20 +3,56 @@ package com.iso53;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Scheduler {
+    
+    /**
+     * Shows how much the time value should increase on each for loop. (Waiting Time Scheduling)
+     */
+    private static final double TIME_INCREASE_VALUE = 1 / ((double) (ProblemData.INCIDENTS.length));
 
-    static double DISTANCE_COEFFICIENT = 0.2 * 0.15; // 1-5
-    static double PROCESS_TIME_COEFFICIENT = 0.004 * 0.25; // 10-240
-    static double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.16 * 0.25; // 1-6
-    static double WAIT_COEFFICIENT = 0.072 * 0.35; // 1-14
+    /**
+     * A fully handled incident status should look like this
+     */
+    private static final String HANDLED_INCIDENT = "0".repeat(ProblemData.LENGTH_OF_PROCESS_TIME_AND_CAPABILITIES);
 
-    public static ArrayList<LinkedList<String>> schedule(List<Incident> incidents, List<Unit> units) {
-        // Initialize final result
-        ArrayList<LinkedList<String>> finalResult = new ArrayList<>(units.size());
-        for (int i = 0; i < units.size(); i++) {
-            finalResult.add(new LinkedList<>());
+    /**
+     * Shows the sum of severity capability count starting from 1 to SEVERITY_CAPABILITY_COUNT. Let's say the
+     * SEVERITY_CAPABILITY_COUNT is equal to 3. That means there are 3 level of severity for incidents and 3 level of
+     * capability for units. From left to right their points starts from 1 to SEVERITY_CAPABILITY_COUNT. If a unit with
+     * 111 type handles an incident with 111 type you got:
+     * 1 point from first bit
+     * 2 point from second bit
+     * 3 point from third bit, in total of 6 points. This number used for calculating how many different levels of
+     * incident a unit can handle on an incident. The more level the unit got or the more the severity increases the
+     * more point it gets. Calculated like -> [1 + 2 + 3 + ... + n] => [n * (n + 1) / 2]
+     */
+    private static final double SUM_OF_SEVERITY_CAPABILITY = (double) (ProblemData.SEVERITY_CAPABILITY_COUNT * (ProblemData.SEVERITY_CAPABILITY_COUNT + 1)) / 2;
+
+    /**
+     * Used to weight the importance of the distance between the unit's location and the incident's location in the
+     * final result calculation. The value is multiplied by the distance.
+     */
+    private static final double DISTANCE_COEFFICIENT = 0.40;
+
+    /**
+     * Used to weight the importance of the process time in the final result calculation. The value is multiplied by the
+     * process time.
+     */
+    private static final double PROCESS_TIME_COEFFICIENT = 0.45;
+
+    /**
+     * Used to weight the importance of the severity of incidents not handled by the unit in the final result
+     * calculation. The value is multiplied by the severity.
+     */
+    private static final double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.25;
+
+    /**
+     * Used to weight the importance of the unit's wait time in the final result calculation. The more a unit waits
+     * (isn't assigned to an incident in each for loop), more the wait time value increases of that Unit. The value is
+     * then multiplied by the wait time.
+     */
+    private static final double WAIT_COEFFICIENT = 0.5;
         }
 
         System.out.println("INCIDENT  | UNIT      | RESULT");
