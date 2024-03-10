@@ -132,13 +132,18 @@ public class Scheduler {
         return null;
     }
 
-    public static class UnitWrapper {
+    private static class UnitWrapper {
         public Unit unit;
-        public int waitTime;
+        public double waitTime;
+        public int lastLocationIndex;
 
-        public UnitWrapper(Unit unit, int waitTime) {
+        public UnitWrapper(Unit unit) {
             this.unit = unit;
-            this.waitTime = waitTime;
+            this.waitTime = 0.0;
+            this.lastLocationIndex = ProblemData.HEADQUARTER.index; // All units start at HQ
+        }
+    }
+
     public static class Solution {
 
         private final ArrayList<LinkedList<Event>> solution;
