@@ -31,12 +31,6 @@ public class Unit {
         return ProblemData.UNIT_NAMES[n];
     }
 
-    public boolean canHandle(int incident) {
-//        return ProblemData.UNITS_CAPABILITIES[type][incident] != -1;
-        // ??????
-        return false;
-    }
-
     public int getTypeIndex(int n) {
         return this.type.substring(0, n + 1).lastIndexOf('1');
     }
