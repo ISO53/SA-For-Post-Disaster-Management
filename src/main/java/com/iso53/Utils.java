@@ -199,4 +199,57 @@ public class Utils {
             System.out.println(); // Move to the next line after each row
         }
     }
+
+    public static double min(double[][] matrix) {
+        double min = Double.MAX_VALUE;
+
+        for (double[] row : matrix) {
+            for (double value : row) {
+                if (value <= 0) {
+                    continue;
+                }
+                if (value < min) {
+                    min = value;
+                }
+            }
+        }
+
+        return min;
+    }
+
+    public static double max(double[][] matrix) {
+        double max = Double.MIN_VALUE;
+
+        for (double[] row : matrix) {
+            for (double value : row) {
+                if (value <= 0) {
+                    continue;
+                }
+                if (value > max) {
+                    max = value;
+                }
+            }
+        }
+
+        return max;
+    }
+
+    public static double[][] minMaxScale(double[][] matrix) {
+        // Find the minimum and maximum values
+        double min = Math.min(min(ProblemData.DISTANCE_MATRIX), min(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
+        double max = Math.max(max(ProblemData.DISTANCE_MATRIX), max(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
+
+        double range = max - min;
+
+        // Apply min-max scaling
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] > 0) {
+                    matrix[i][j] = (matrix[i][j] - min) / range;
+                }
+            }
+        }
+
+        return matrix;
+    }
 }

@@ -12,4 +12,9 @@ public class ProblemData {
 
     public static double[][] DISTANCE_MATRIX = Utils.jsonToMatrix("Distance Matrix.json");
     public static double[][] PROCESS_TIME_AND_CAPABILITIES = Utils.jsonToProcessTimeAndCapabilities("Process Time and Capabilities.json");
+
+    // Apply min-max scaling to data
+    public static double[][] SCALED_DISTANCE_MATRIX = Utils.minMaxScale(DISTANCE_MATRIX);
+    public static double[][] SCALED_PROCESS_TIME_AND_CAPABILITIES = Utils.minMaxScale(PROCESS_TIME_AND_CAPABILITIES);
+
 }
