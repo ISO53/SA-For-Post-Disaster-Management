@@ -29,14 +29,17 @@ public class Utils {
         return null;
     }
 
-    public static List<Incident> jsonToIncidents(String filePath) {
-        List<Incident> incidents = new ArrayList<>();
+    public static Incident[] jsonToIncidents(String filePath) {
+        Incident[] incidents = null;
 
         try (InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream != null) {
                 // Read the content of the JSON file
                 InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                 JsonArray incidentsAsJsonArr = JsonParser.parseReader(reader).getAsJsonArray();
+
+                // Initialize the array
+                incidents = new Incident[incidentsAsJsonArr.size() - 1];
 
                 for (int i = 0; i < incidentsAsJsonArr.size(); i++) {
                     if (i == incidentsAsJsonArr.size() - 1) {
@@ -49,13 +52,11 @@ public class Utils {
                         break;
                     }
                     JsonObject incident = incidentsAsJsonArr.get(i).getAsJsonObject();
-                    incidents.add(
-                            new Incident(
-                                    incident.get("status").getAsString(),
-                                    i,
-                                    incident.get("latitude").getAsDouble(),
-                                    incident.get("longitude").getAsDouble()
-                            )
+                    incidents[i] = new Incident(
+                            incident.get("status").getAsString(),
+                            i,
+                            incident.get("latitude").getAsDouble(),
+                            incident.get("longitude").getAsDouble()
                     );
                 }
             } else {
@@ -68,8 +69,8 @@ public class Utils {
         return incidents;
     }
 
-    public static List<Unit> jsonToUnits(String filePath) {
-        List<Unit> units = new ArrayList<>();
+    public static Unit[] jsonToUnits(String filePath) {
+        Unit[] units = null;
 
         try (InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream != null) {
@@ -77,8 +78,11 @@ public class Utils {
                 InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                 JsonArray unitsAsJsonArr = JsonParser.parseReader(reader).getAsJsonArray();
 
+                // Initialize the array
+                units = new Unit[unitsAsJsonArr.size()];
+
                 for (int i = 0; i < unitsAsJsonArr.size(); i++) {
-                    units.add(new Unit(unitsAsJsonArr.get(i).getAsJsonObject().get("type").getAsString()));
+                    units[i] = new Unit(unitsAsJsonArr.get(i).getAsJsonObject().get("type").getAsString());
                 }
             } else {
                 System.out.println("File not found: " + filePath);
