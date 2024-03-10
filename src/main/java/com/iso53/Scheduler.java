@@ -139,6 +139,32 @@ public class Scheduler {
         public UnitWrapper(Unit unit, int waitTime) {
             this.unit = unit;
             this.waitTime = waitTime;
+    public static class Solution {
+
+        private final ArrayList<LinkedList<Event>> solution;
+
+        public Solution(int size) {
+            solution = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                solution.add(new LinkedList<>());
+            }
+        }
+
+        public void add(Event event, int bestUnitIndex) {
+            this.solution.get(bestUnitIndex).add(event);
+        }
+
+        public void printSolution() {
+            for (int i = 0; i < solution.size(); i++) {
+                System.out.print("Unit " + i + " ==>  ");
+                for (Event event : solution.get(i)) {
+                    System.out.print(event.bar());
+                }
+                System.out.println();
+            }
+        }
+    }
+
     public static class Event {
 
         private final double distanceTime;
