@@ -151,6 +151,46 @@ public class Utils {
         return processTimeAndCapabilities;
     }
 
+    public static int lengthOfProcessTimeAndCapabilities(String filePath) {
+        int length = 0;
+
+        try (InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(filePath)) {
+            if (inputStream != null) {
+                // Read the content of the JSON file
+                InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+                JsonArray processArray = jsonObject.getAsJsonArray("process_time_and_capabilities");
+                length = processArray.size();
+            } else {
+                System.out.println("File not found: " + filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return length;
+    }
+
+    public static int lengthOfIncidents(String filePath) {
+        int length = 0;
+
+        try (InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(filePath)) {
+            if (inputStream != null) {
+                // Read the content of the JSON file
+                InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+                JsonArray array = jsonObject.getAsJsonArray("incident_names");
+                length = array.size();
+            } else {
+                System.out.println("File not found: " + filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return length;
+    }
+
     public static void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
