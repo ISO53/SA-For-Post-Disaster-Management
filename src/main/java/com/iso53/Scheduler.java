@@ -53,101 +53,94 @@ public class Scheduler {
      * then multiplied by the wait time.
      */
     private static final double WAIT_COEFFICIENT = 0.5;
+
+    public static Solution schedule(Incident[] incidents, Unit[] units) {
+        // Initialize solution
+        Solution solution = new Solution(units.length);
+
+        // Create unit wrappers
+        UnitWrapper[] unitWrappers = new UnitWrapper[units.length];
+        for (int i = 0; i < units.length; i++) {
+            unitWrappers[i] = new UnitWrapper(units[i]);
         }
 
-        System.out.println("INCIDENT  | UNIT      | RESULT");
-        System.out.println("------------------------------");
-
         // Iterate incidents
-        for (int i = 0; i < incidents.size(); i++) {
-            Incident inc = incidents.get(i);
-            double[] results = new double[units.size()];
+        for (int i = 0; i < incidents.length; i++) {
 
-            // Create unit wrappers
-            ArrayList<UnitWrapper> unitWrappers = new ArrayList<>(units.size());
-            for (Unit unit : units) {
-                unitWrappers.add(new UnitWrapper(unit, 0));
-            }
+            // Create an array to store the events for each unit-incident pair
+            Event[] events = new Event[units.length];
 
-            // Iterate units to find the best one
-            for (int j = 0; j < unitWrappers.size(); j++) {
-
-                char[] result = new char[inc.status.length()];
-                int sumOfHandledSeverity = handle(result, inc.status, unitWrappers.get(j).unit.type);
-
-                // If this unit can't handle that incident make the result MAX because we're looking for the minimum
-                // result value
-                if (sumOfHandledSeverity == -1) {
-                    results[j] = Integer.MAX_VALUE;
-                    continue;
-                }
-
-                // Calculate each value
-                double severityValue = (6 - sumOfHandledSeverity);
-                double distanceValue = ProblemData.DISTANCE_MATRIX[unitWrappers.get(j).unit.lastLocationIndex][inc.index];
-                double processTimeValue = ProblemData.PROCESS_TIME_AND_CAPABILITIES[unitWrappers.get(j).unit.getUnitType()][inc.getUnitType()];
-
-                // Calculate the result for that unit and incident pair
-                results[j] =
-                        severityValue * SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT +
-                                distanceValue * DISTANCE_COEFFICIENT +
-                                processTimeValue * PROCESS_TIME_COEFFICIENT +
-                                unitWrappers.get(j).waitTime * WAIT_COEFFICIENT;
+            // Iterate units to collect all possible unit-incident pairs (Events)
+            for (int j = 0; j < unitWrappers.length; j++) {
+                events[j] = handle(incidents[i], unitWrappers[j]);
             }
 
             // Find the best unit
-            int bestUnitIndex = minElementIndex(results);
-            Unit bestUnit = units.get(bestUnitIndex);
+            int bestUnitIndex = findBestUnitIndex(events);
+            Unit bestUnit = units[bestUnitIndex];
 
             // Handle incident with best unit
-            char[] handledIncident = inc.status.toCharArray();
-            handle(handledIncident, inc.status, bestUnit.type);
-            String resultBar = bar('d', ProblemData.DISTANCE_MATRIX[unitWrappers.get(bestUnitIndex).unit.lastLocationIndex][inc.index]) + " " + bar('p', ProblemData.PROCESS_TIME_AND_CAPABILITIES[unitWrappers.get(bestUnitIndex).unit.getUnitType()][inc.getUnitType()]);
-            finalResult.get(bestUnitIndex).add(resultBar);
-            bestUnit.lastLocationIndex = inc.index;
-            unitWrappers.get(bestUnitIndex).waitTime = 0;
-//            finalResult.get(bestUnitIndex).add(inc.status);
-//            finalResult.get(bestUnitIndex).add(inc.index + "");
-            System.out.println(inc.status + " | " + bestUnit.type + " | " + String.valueOf(handledIncident));
-            inc.status = String.valueOf(handledIncident);
+            incidents[i].status = events[bestUnitIndex].result;
+
+            // Add this event to solution
+            solution.add(events[bestUnitIndex], bestUnitIndex);
+
+            // Update the last location of the best unit with current incident location
+            unitWrappers[bestUnitIndex].lastLocationIndex = incidents[i].index;
+
+            // Reset the wait time of the best unit
+            unitWrappers[bestUnitIndex].waitTime = 0;
 
             // If this incident not fully handled yet, re-assign unit to this
-            if (!inc.status.equals("000000000")) {
-                // incident fully handled
+            if (!incidents[i].status.equals(HANDLED_INCIDENT)) {
+                // incident not fully handled
                 i--;
             }
 
             // Increase not used unit's wait time
             for (UnitWrapper unitWrapper : unitWrappers) {
                 if (bestUnit != unitWrapper.unit) {
-                    unitWrapper.waitTime++;
+                    unitWrapper.waitTime += TIME_INCREASE_VALUE;
                 }
             }
         }
 
-        return finalResult;
+        return solution;
     }
 
-    public static int handle(char[] result, String incident, String unit) {
-        int handledSeverity = 0;
+    private static Event handle(Incident incident, UnitWrapper unitWrapper) {
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < incident.length(); i++) {
-            if (incident.charAt(i) == '1' && unit.charAt(i) == '1') {
-                result[i] = '0';
-                handledSeverity += i % 3 + 1;
+        // Calculate handled severities and total process time. Keep in mind that one unit may be handling more than one
+        // event
+        double handledSeverityPoint = 0;
+        double totalProcessTime = 0;
+        for (int i = 0; i < incident.status.length(); i++) {
+            if (incident.status.charAt(i) == '1' && unitWrapper.unit.type.charAt(i) == '1') {
+                sb.append('0');
+                handledSeverityPoint += (i % ProblemData.SEVERITY_CAPABILITY_COUNT + 1) * (1 / SUM_OF_SEVERITY_CAPABILITY);
+                totalProcessTime += ProblemData.SCALED_PROCESS_TIME_AND_CAPABILITIES[unitWrapper.unit.getTypeIndex(floorBased(i, ProblemData.SEVERITY_CAPABILITY_COUNT))][i];
+            } else {
+                sb.append(incident.status.charAt(i));
             }
         }
 
-        return handledSeverity == 0 ? -1 : handledSeverity;
+        // Calculate total distance time
+        double totalDistanceTime = ProblemData.SCALED_DISTANCE_MATRIX[unitWrapper.lastLocationIndex][incident.index];
+
+        // Get the remaining handled severity point cuz we're aiming for minimum
+        handledSeverityPoint = 1 - handledSeverityPoint;
+
+        return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, unitWrapper.waitTime, sb.toString(), unitWrapper.unit.type, incident.status);
     }
 
-    public static int minElementIndex(double[] arr) {
+    private static int findBestUnitIndex(Event[] events) {
         double currMin = Double.MAX_VALUE;
         int index = 0;
 
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] < currMin) {
-                currMin = arr[i];
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].score < currMin) {
+                currMin = events[i].score;
                 index = i;
             }
         }
@@ -155,17 +148,8 @@ public class Scheduler {
         return index;
     }
 
-    public static String bar(char type, double length) {
-        if (type == 'd') {
-            char[] chars = new char[(int) (length)];
-            Arrays.fill(chars, '_');
-            return new String(chars);
-        } else if (type == 'p') {
-            char[] chars = new char[(int) (length / 5)];
-            Arrays.fill(chars, '#');
-            return new String(chars);
-        }
-        return null;
+    private static int floorBased(int number, int n) {
+        return (number / n) * n + n - 1;
     }
 
     private static class UnitWrapper {
