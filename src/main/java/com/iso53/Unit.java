@@ -37,15 +37,8 @@ public class Unit {
         return false;
     }
 
-    public int getUnitType() {
-        for(int i = 0; i < 3; i++) {
-            String part = this.type.substring(i * 3, i * 3 + 3);
-            if (!part.equals("000")) {
-                return (i + 1) * 3 - 1;
-            }
-        }
-
-        return -1;
+    public int getTypeIndex(int n) {
+        return this.type.substring(0, n + 1).lastIndexOf('1');
     }
 
     @Override

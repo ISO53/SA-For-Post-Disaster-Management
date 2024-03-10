@@ -58,15 +58,8 @@ public class Incident {
         return sb.delete(sb.length() - 2, sb.length()).toString();
     }
 
-    public int getUnitType() {
-        for(int i = 0; i < 3; i++) {
-            String part = this.status.substring(i * 3, i * 3 + 3);
-            if (!part.equals("000")) {
-                return (i + 1) * 3 - 1;
-            }
-        }
-
-        return -1;
+    public int getTypeIndex(int n) {
+        return this.status.substring(0, n + 1).lastIndexOf('1');
     }
 
     @Override
