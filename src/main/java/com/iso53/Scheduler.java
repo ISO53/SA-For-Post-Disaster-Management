@@ -1,15 +1,21 @@
 package com.iso53;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Scheduler {
+
+    /**
+     * Shows how may event can occur in worst case scenario. The worst case is when every unit completes only one bit of
+     * incident. Calculates by counting all the '1' bits in all the incidents.
+     */
+    private static final double MAX_NUMBER_OF_EVENT_COUNT = Event.getMaxNumberOfEventCount();
     
     /**
-     * Shows how much the time value should increase on each for loop. (Waiting Time Scheduling)
+     * Shows how much the time value should increase on each for loop. (Waiting Time Scheduling). Divided by
+     * MAX_NUMBER_OF_EVENT_COUNT to min-max scale the time values.
      */
-    private static final double TIME_INCREASE_VALUE = 1 / ((double) (ProblemData.INCIDENTS.length));
+    private static final double TIME_INCREASE_VALUE = 1 / MAX_NUMBER_OF_EVENT_COUNT;
 
     /**
      * A fully handled incident status should look like this
@@ -263,7 +269,18 @@ public class Scheduler {
                     "|".repeat((int) (this.processTime * 10) + 1);
         }
 
+        public static double getMaxNumberOfEventCount() {
+            double eventCount = 0;
 
+            for (int i = 0; i < ProblemData.INCIDENTS.length; i++) {
+                for (int j = 0; j < ProblemData.INCIDENTS[i].status.length(); j++) {
+                    if (ProblemData.INCIDENTS[i].status.charAt(j) == '1') {
+                        eventCount++;
+                    }
+                }
+            }
+
+            return eventCount;
         }
     }
 }
