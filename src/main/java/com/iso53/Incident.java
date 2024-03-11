@@ -30,43 +30,22 @@ public class Incident {
 
     public Incident(String status, int index, double lat, double lon) {
         this.status = status;
-        this.name = getNameFromStatus(status);
+        this.name = getNameFromStatus();
         this.index = index;
         this.lat = lat;
         this.lon = lon;
     }
 
-    private static String getNameFromStatus(String status) {
-        int pieceLength = status.length() / 3;
-
-        String piece1 = status.substring(0, pieceLength);
-        String piece2 = status.substring(pieceLength, 2 * pieceLength);
-        String piece3 = status.substring(2 * pieceLength);
-
+    private String getNameFromStatus() {
         StringBuilder sb = new StringBuilder();
 
-        if (!piece1.equals("000")) {
-            sb.append(ProblemData.INCIDENT_NAMES[0]).append(", ");
-        } else {
-            char[] spaces = new char[ProblemData.INCIDENT_NAMES[0].length()];
-            Arrays.fill(spaces, ' ');
-            sb.append(spaces).append(", ");
-        }
-
-        if (!piece2.equals("000")) {
-            sb.append(ProblemData.INCIDENT_NAMES[1]).append(", ");
-        } else {
-            char[] spaces = new char[ProblemData.INCIDENT_NAMES[1].length()];
-            Arrays.fill(spaces, ' ');
-            sb.append(spaces).append(", ");
-        }
-
-        if (!piece3.equals("000")) {
-            sb.append(ProblemData.INCIDENT_NAMES[2]).append(", ");
-        } else {
-            char[] spaces = new char[ProblemData.INCIDENT_NAMES[2].length()];
-            Arrays.fill(spaces, ' ');
-            sb.append(spaces).append(", ");
+        for (int i = 0; i < this.status.length(); i += ProblemData.SEVERITY_CAPABILITY_COUNT) {
+            String piece = status.substring(i, i + ProblemData.SEVERITY_CAPABILITY_COUNT);
+            if (!piece.equals(ProblemData.NO_TYPE)) {
+                sb.append(ProblemData.INCIDENT_NAMES[i / ProblemData.SEVERITY_CAPABILITY_COUNT]).append(", ");
+            } else {
+                sb.append("~".repeat(ProblemData.INCIDENT_NAMES[i / ProblemData.SEVERITY_CAPABILITY_COUNT].length())).append(", ");
+            }
         }
 
         return sb.delete(sb.length() - 2, sb.length()).toString();

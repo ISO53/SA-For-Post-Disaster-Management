@@ -7,26 +7,22 @@ public class Unit {
 
     public Unit(String type) {
         this.type = type;
-        this.name = getNameFromType(type);
+        this.name = getNameFromType();
     }
 
-    private static String getNameFromType(String type) {
-        int pieceLength = type.length() / 3;
+    private String getNameFromType() {
+        StringBuilder sb = new StringBuilder();
 
-        String piece1 = type.substring(0, pieceLength);
-        String piece2 = type.substring(pieceLength, 2 * pieceLength);
-        String piece3 = type.substring(2 * pieceLength);
-
-        int n = 0;
-        if (!piece1.equals("000")) {
-            n = 0;
-        } else if (!piece2.equals("000")) {
-            n = 1;
-        } else if (!piece3.equals("000")) {
-            n = 2;
+        for (int i = 0; i < this.type.length(); i += ProblemData.SEVERITY_CAPABILITY_COUNT) {
+            String piece = this.type.substring(i, i + ProblemData.SEVERITY_CAPABILITY_COUNT);
+            if (!piece.equals(ProblemData.NO_TYPE)) {
+                sb.append(ProblemData.UNIT_NAMES[i / ProblemData.SEVERITY_CAPABILITY_COUNT]).append(", ");
+            } else {
+                sb.append("~".repeat(ProblemData.UNIT_NAMES[i / ProblemData.SEVERITY_CAPABILITY_COUNT].length())).append(", ");
+            }
         }
 
-        return ProblemData.UNIT_NAMES[n];
+        return sb.delete(sb.length() - 2, sb.length()).toString();
     }
 
     public int getTypeIndex(int n) {
