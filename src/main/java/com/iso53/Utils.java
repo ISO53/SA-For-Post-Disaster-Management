@@ -194,7 +194,11 @@ public class Utils {
     public static void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                System.out.printf("%.4f\t", matrix[i][j]);
+                if (matrix[i][j] == -1) {
+                    System.out.print("  ~~  \t");
+                } else {
+                    System.out.printf("%.4f\t", matrix[i][j]);
+                }
             }
             System.out.println(); // Move to the next line after each row
         }
