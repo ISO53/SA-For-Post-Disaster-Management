@@ -10,7 +10,7 @@ public class Scheduler {
      * incident. Calculates by counting all the '1' bits in all the incidents.
      */
     private static final double MAX_NUMBER_OF_EVENT_COUNT = Event.getMaxNumberOfEventCount();
-    
+
     /**
      * Shows how much the time value should increase on each for loop. (Waiting Time Scheduling). Divided by
      * MAX_NUMBER_OF_EVENT_COUNT to min-max scale the time values.
@@ -121,11 +121,13 @@ public class Scheduler {
         // event
         double handledSeverityPoint = 0;
         double totalProcessTime = 0;
+        double numberOfIncidentBitsHandled = 0;
         for (int i = 0; i < incident.status.length(); i++) {
             if (incident.status.charAt(i) == '1' && unitWrapper.unit.type.charAt(i) == '1') {
                 sb.append('0');
                 handledSeverityPoint += (i % ProblemData.SEVERITY_CAPABILITY_COUNT + 1) * (1 / SUM_OF_SEVERITY_CAPABILITY);
                 totalProcessTime += ProblemData.SCALED_PROCESS_TIME_AND_CAPABILITIES[unitWrapper.unit.getTypeIndex(floorBased(i, ProblemData.SEVERITY_CAPABILITY_COUNT))][i];
+                numberOfIncidentBitsHandled++;
             } else {
                 sb.append(incident.status.charAt(i));
             }
@@ -136,8 +138,13 @@ public class Scheduler {
 
         // Get the remaining handled severity point cuz we're aiming for minimum
         handledSeverityPoint = 1 - handledSeverityPoint;
+        double waitValue = 1 - unitWrapper.waitTime;
 
-        return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, unitWrapper.waitTime, sb.toString(), unitWrapper.unit.type, incident.status);
+        // Find the average ...
+        totalProcessTime = totalProcessTime / numberOfIncidentBitsHandled;
+
+        // (handledSeverityPoint < 0 || handledSeverityPoint > 1) || (totalProcessTime < 0 || totalProcessTime > 1) || (totalDistanceTime < 0 || totalDistanceTime > 1) || (waitValue < 0 || waitValue > 1)
+        return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, waitValue, sb.toString(), unitWrapper.unit.type, incident.status);
     }
 
     private static int findBestUnitIndex(Event[] events) {
@@ -257,10 +264,10 @@ public class Scheduler {
                 return Double.MAX_VALUE;
             }
 
-            return this.handledSeverityPoint * SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT +
-                    this.distanceTime * DISTANCE_COEFFICIENT +
-                    this.processTime * PROCESS_TIME_COEFFICIENT +
-                    (3 - this.waitValue) * WAIT_COEFFICIENT; //şimdilik
+            return  this.handledSeverityPoint * SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT
+                    + this.distanceTime * DISTANCE_COEFFICIENT
+                    + this.processTime * PROCESS_TIME_COEFFICIENT
+                    + this.waitValue * WAIT_COEFFICIENT;
         }
 
         public String bar() {

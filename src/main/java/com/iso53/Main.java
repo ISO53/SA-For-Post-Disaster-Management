@@ -13,7 +13,7 @@ public class Main {
 
         List<Incident> incidents = Arrays.asList(ProblemData.INCIDENTS.clone());
 
-        Collections.shuffle(incidents);
+//        Collections.shuffle(incidents);
 
         // create copies so original data remains unchanged
         Scheduler.Solution solution = Scheduler.schedule(incidents.toArray(new Incident[0]), ProblemData.UNITS.clone());
