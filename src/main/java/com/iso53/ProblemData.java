@@ -20,6 +20,11 @@ public class ProblemData {
      */
     public static final int SEVERITY_CAPABILITY_COUNT = LENGTH_OF_PROCESS_TIME_AND_CAPABILITIES / LENGTH_INCIDENTS_NAME;
 
+    /**
+     * A unit or incident part with no type should look like this.
+     */
+    public static final String NO_TYPE = "0".repeat(SEVERITY_CAPABILITY_COUNT);
+
     public static Headquarter HEADQUARTER;
     public static String[] INCIDENT_NAMES = Utils.jsonToNames("Process Time and Capabilities.json", "incident_names");
     public static String[] UNIT_NAMES = Utils.jsonToNames("Process Time and Capabilities.json", "unit_names");
@@ -33,9 +38,4 @@ public class ProblemData {
     // Apply min-max scaling to data
     public static double[][] SCALED_DISTANCE_MATRIX = Utils.minMaxScale(DISTANCE_MATRIX);
     public static double[][] SCALED_PROCESS_TIME_AND_CAPABILITIES = Utils.minMaxScale(PROCESS_TIME_AND_CAPABILITIES);
-
-    /**
-     * A unit or incident part with no type should look like this.
-     */
-    public static final String NO_TYPE = "0".repeat(SEVERITY_CAPABILITY_COUNT);
 }
