@@ -236,6 +236,14 @@ public class Scheduler {
             return score;
         }
 
+        public String getUnitType() {
+            return unitType;
+        }
+
+        public String getIncidentStatus() {
+            return incidentStatus;
+        }
+
         private double calculateScore() {
             // If this unit can't handle that incident make the result MAX because we're looking for the minimum result
             // value
@@ -255,12 +263,7 @@ public class Scheduler {
                     "|".repeat((int) (this.processTime * 10) + 1);
         }
 
-        public String getUnitType() {
-            return unitType;
-        }
 
-        public String getIncidentStatus() {
-            return incidentStatus;
         }
     }
 }
