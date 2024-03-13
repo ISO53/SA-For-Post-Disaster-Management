@@ -36,37 +36,54 @@ public class Scheduler {
      * Used to weight the importance of the distance between the unit's location and the incident's location in the
      * final result calculation. The value is multiplied by the distance.
      */
-    public static final double DISTANCE_COEFFICIENT = 0.10;
+    public static double DISTANCE_COEFFICIENT = 0.10;
 
     /**
      * Used to weight the importance of the process time in the final result calculation. The value is multiplied by the
      * process time.
      */
-    public static final double PROCESS_TIME_COEFFICIENT = 0.15;
+    public static double PROCESS_TIME_COEFFICIENT = 0.15;
 
     /**
      * Used to weight the importance of the severity of incidents not handled by the unit in the final result
      * calculation. The value is multiplied by the severity.
      */
-    public static final double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.25;
+    public static double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.25;
 
     /**
      * Used to weight the importance of the unit's wait time in the final result calculation. The more a unit waits
      * (isn't assigned to an incident in each for loop), more the wait time value increases of that Unit. The value is
      * then multiplied by the wait time.
      */
-    public static final double WAIT_COEFFICIENT = 0.5;
+    public static double WAIT_COEFFICIENT = 0.5;
 
     /**
-     *  When the unit unnecessarily powerful for an incident on some cases it shouldn't be used. For example let's say
-     *  we have and incident: 000110000, unit1: 000111000, unit2: 000110000. Both units can handle this incident very
-     *  well. In fact the unit1 can handle it faster (better units has less process time). But if we pair all the
-     *  incidents with more powerful units the less powerful units can't get any incident. And that is what we're trying
-     *  to avoid. That's why if an 'unnecessary powerful unit' handles an incident we give it a penalty to that score.
+     * When the unit unnecessarily powerful for an incident on some cases it shouldn't be used. For example let's say
+     * we have and incident: 000110000, unit1: 000111000, unit2: 000110000. Both units can handle this incident very
+     * well. In fact the unit1 can handle it faster (better units has less process time). But if we pair all the
+     * incidents with more powerful units the less powerful units can't get any incident. And that is what we're trying
+     * to avoid. That's why if an 'unnecessary powerful unit' handles an incident we give it a penalty to that score.
      */
-    public static final double UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT = 0.4;
+    public static double UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT = 0.4;
 
-    public static Solution schedule(Incident[] incidents, Unit[] units) {
+    /**
+     * Initializes with default coefficients.
+     */
+    public Scheduler() {
+    }
+
+    /**
+     * Initializes with given coefficients.
+     */
+    public Scheduler(double distanceCoefficient, double processTimeCoefficient, double sumOfHandledSeverityCoefficient, double waitCoefficient, double unnecessaryPowerfulUnitPenaltyCoefficient) {
+        DISTANCE_COEFFICIENT = distanceCoefficient;
+        PROCESS_TIME_COEFFICIENT = processTimeCoefficient;
+        SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = sumOfHandledSeverityCoefficient;
+        WAIT_COEFFICIENT = waitCoefficient;
+        UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT = unnecessaryPowerfulUnitPenaltyCoefficient;
+    }
+
+    public Solution schedule(Incident[] incidents, Unit[] units) {
         // Initialize solution
         Solution solution = new Solution(units.length);
 
@@ -189,5 +206,23 @@ public class Scheduler {
         }
     }
 
+    public static double getDistanceCoefficient() {
+        return DISTANCE_COEFFICIENT;
+    }
 
+    public static double getProcessTimeCoefficient() {
+        return PROCESS_TIME_COEFFICIENT;
+    }
+
+    public static double getSumOfNotHandledSeverityCoefficient() {
+        return SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT;
+    }
+
+    public static double getWaitCoefficient() {
+        return WAIT_COEFFICIENT;
+    }
+
+    public static double getUnnecessaryPowerfulUnitPenaltyCoefficient() {
+        return UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT;
+    }
 }
