@@ -19,7 +19,7 @@ public class Mutation<T> {
 
         // Move the element at index2 to follow index1, shifting the rest along
         T value = array[unique[1]];
-        System.arraycopy(array, unique[0] + 1, array, unique[0] + 2, array.length - unique[0] - 2);
+        System.arraycopy(array, unique[0] + 1, array, unique[0] + 2, unique[1] - unique[0] - 1);
         array[unique[0] + 1] = value;
     }
 
