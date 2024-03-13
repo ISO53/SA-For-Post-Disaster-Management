@@ -36,6 +36,14 @@ public class Incident {
         this.lon = lon;
     }
 
+    public Incident(Incident other) {
+        this.status = other.status;
+        this.name = other.name;
+        this.lat = other.lat;
+        this.lon = other.lon;
+        this.index = other.index;
+    }
+
     private String getNameFromStatus() {
         StringBuilder sb = new StringBuilder();
 
