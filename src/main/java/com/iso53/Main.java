@@ -1,21 +1,31 @@
 package com.iso53;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         printData();
 
+        int size = 100000;
+
+        // Solutions
+        ArrayList<Solution> solutions = new ArrayList<>(size);
+
         // create copies so original data remains unchanged
-        List<Incident> incidents = Arrays.asList(ProblemData.INCIDENTS.clone());
+        Incident[] incidentsArr = ProblemData.INCIDENTS.clone();
 
-        //        Collections.shuffle(incidents);
+        for (int i = 0; i < size; i++) {
+            Mutation.scramble(incidentsArr);
+            Solution solution = Scheduler.schedule(deepCopy(incidentsArr), ProblemData.UNITS.clone());
+            solutions.add(solution);
+        }
 
-        Scheduler.Solution solution = Scheduler.schedule(incidents.toArray(new Incident[0]), ProblemData.UNITS.clone());
+        // Best solution overall
+        Solution minSolution = Collections.min(solutions, Comparator.comparingDouble(Solution::getScore));
+
 
         System.out.println("******************************** RESULT ********************************");
-        solution.printSolution();
+        minSolution.printSolution();
     }
 
     public static void printData() {
