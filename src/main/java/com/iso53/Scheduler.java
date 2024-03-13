@@ -39,26 +39,26 @@ public class Scheduler {
      * Used to weight the importance of the distance between the unit's location and the incident's location in the
      * final result calculation. The value is multiplied by the distance.
      */
-    private static final double DISTANCE_COEFFICIENT = 0.40;
+    public static final double DISTANCE_COEFFICIENT = 0.10;
 
     /**
      * Used to weight the importance of the process time in the final result calculation. The value is multiplied by the
      * process time.
      */
-    private static final double PROCESS_TIME_COEFFICIENT = 0.45;
+    public static final double PROCESS_TIME_COEFFICIENT = 0.15;
 
     /**
      * Used to weight the importance of the severity of incidents not handled by the unit in the final result
      * calculation. The value is multiplied by the severity.
      */
-    private static final double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.25;
+    public static final double SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = 0.25;
 
     /**
      * Used to weight the importance of the unit's wait time in the final result calculation. The more a unit waits
      * (isn't assigned to an incident in each for loop), more the wait time value increases of that Unit. The value is
      * then multiplied by the wait time.
      */
-    private static final double WAIT_COEFFICIENT = 0.5;
+    public static final double WAIT_COEFFICIENT = 0.5;
 
     public static Solution schedule(Incident[] incidents, Unit[] units) {
         // Initialize solution
@@ -86,7 +86,7 @@ public class Scheduler {
             Unit bestUnit = units[bestUnitIndex];
 
             // Handle incident with best unit
-            incidents[i].status = events[bestUnitIndex].result;
+            incidents[i].status = events[bestUnitIndex].getResult();
 
             // Add this event to solution
             solution.add(events[bestUnitIndex], bestUnitIndex);
@@ -152,8 +152,8 @@ public class Scheduler {
         int index = 0;
 
         for (int i = 0; i < events.length; i++) {
-            if (events[i].score < currMin) {
-                currMin = events[i].score;
+            if (events[i].getScore() < currMin) {
+                currMin = events[i].getScore();
                 index = i;
             }
         }
@@ -203,91 +203,5 @@ public class Scheduler {
         }
     }
 
-    public static class Event {
 
-        private final double distanceTime;
-        private final double processTime;
-        private final double handledSeverityPoint;
-        private final double waitValue;
-        private final String result;
-        private final double score;
-        private final String unitType;
-        private final String incidentStatus;
-
-        public Event(double distanceTime, double processTime, double handledSeverityPoint, double waitValue, String result, String unitType, String incidentStatus) {
-            this.distanceTime = distanceTime;
-            this.processTime = processTime;
-            this.handledSeverityPoint = handledSeverityPoint;
-            this.waitValue = waitValue;
-            this.result = result;
-            this.score = calculateScore();
-            this.unitType = unitType;
-            this.incidentStatus = incidentStatus;
-        }
-
-        public double getDistanceTime() {
-            return distanceTime;
-        }
-
-        public double getProcessTime() {
-            return processTime;
-        }
-
-        public double getHandledSeverityPoint() {
-            return handledSeverityPoint;
-        }
-
-        public double getWaitValue() {
-            return waitValue;
-        }
-
-        public String getResult() {
-            return result;
-        }
-
-        public double getScore() {
-            return score;
-        }
-
-        public String getUnitType() {
-            return unitType;
-        }
-
-        public String getIncidentStatus() {
-            return incidentStatus;
-        }
-
-        private double calculateScore() {
-            // If this unit can't handle that incident make the result MAX because we're looking for the minimum result
-            // value
-            if (this.handledSeverityPoint == 1) {
-                return Double.MAX_VALUE;
-            }
-
-            return  this.handledSeverityPoint * SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT
-                    + this.distanceTime * DISTANCE_COEFFICIENT
-                    + this.processTime * PROCESS_TIME_COEFFICIENT
-                    + this.waitValue * WAIT_COEFFICIENT;
-        }
-
-        public String bar() {
-            // Show distance as '_' and process as '#' character
-            return "_".repeat((int) (this.distanceTime * 10) + 1) +
-                    "|".repeat((int) (this.processTime * 10) + 1);
-        }
-
-        public static double getMaxNumberOfEventCount() {
-            double eventCount = 0;
-
-            for (int i = 0; i < ProblemData.INCIDENTS.length; i++) {
-                for (int j = 0; j < ProblemData.INCIDENTS[i].status.length(); j++) {
-                    if (ProblemData.INCIDENTS[i].status.charAt(j) == '1') {
-                        eventCount++;
-                    }
-                }
-            }
-
-            return eventCount;
-        }
-    }
 }
