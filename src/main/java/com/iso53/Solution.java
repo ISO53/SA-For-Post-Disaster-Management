@@ -39,7 +39,7 @@ public class Solution {
         double variance = sumOfSquares / count - Math.pow(mean, 2);
         double standardDeviation = Math.sqrt(variance);
 
-        return sum + standardDeviation;
+        return standardDeviation;
     }
 
     public void printSolution() {
