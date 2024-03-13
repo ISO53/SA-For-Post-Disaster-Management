@@ -45,4 +45,19 @@ public class Main {
         Utils.printMatrix(ProblemData.PROCESS_TIME_AND_CAPABILITIES);
         System.out.println();
     }
+
+    public static Incident[] deepCopy(Incident[] incidentsArr) {
+        if (incidentsArr == null) {
+            return null;
+        }
+
+        Incident[] copy = new Incident[incidentsArr.length];
+
+        for (int i = 0; i < incidentsArr.length; i++) {
+            // Perform a deep copy of each Incident object
+            copy[i] = new Incident(incidentsArr[i]); // Assuming Incident has a copy constructor
+        }
+
+        return copy;
+    }
 }
