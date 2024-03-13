@@ -1,8 +1,5 @@
 package com.iso53;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public class Scheduler {
 
     /**
@@ -59,6 +56,15 @@ public class Scheduler {
      * then multiplied by the wait time.
      */
     public static final double WAIT_COEFFICIENT = 0.5;
+
+    /**
+     *  When the unit unnecessarily powerful for an incident on some cases it shouldn't be used. For example let's say
+     *  we have and incident: 000110000, unit1: 000111000, unit2: 000110000. Both units can handle this incident very
+     *  well. In fact the unit1 can handle it faster (better units has less process time). But if we pair all the
+     *  incidents with more powerful units the less powerful units can't get any incident. And that is what we're trying
+     *  to avoid. That's why if an 'unnecessary powerful unit' handles an incident we give it a penalty to that score.
+     */
+    public static final double UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT = 0.4;
 
     public static Solution schedule(Incident[] incidents, Unit[] units) {
         // Initialize solution
@@ -128,6 +134,10 @@ public class Scheduler {
                 handledSeverityPoint += (i % ProblemData.SEVERITY_CAPABILITY_COUNT + 1) * (1 / SUM_OF_SEVERITY_CAPABILITY);
                 totalProcessTime += ProblemData.SCALED_PROCESS_TIME_AND_CAPABILITIES[unitWrapper.unit.getTypeIndex(floorBased(i, ProblemData.SEVERITY_CAPABILITY_COUNT))][i];
                 numberOfIncidentBitsHandled++;
+            } else if (incident.status.charAt(i) == '0' && unitWrapper.unit.type.charAt(i) == '1') {
+                sb.append(incident.status.charAt(i));
+                numberOfIncidentBitsHandled++;
+                handledSeverityPoint *= 1 - UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT;
             } else {
                 sb.append(incident.status.charAt(i));
             }
@@ -141,7 +151,9 @@ public class Scheduler {
         double waitValue = 1 - unitWrapper.waitTime;
 
         // Find the average ...
-        totalProcessTime = totalProcessTime / numberOfIncidentBitsHandled;
+        if (numberOfIncidentBitsHandled != 0) {
+            totalProcessTime = totalProcessTime / numberOfIncidentBitsHandled;
+        }
 
         // (handledSeverityPoint < 0 || handledSeverityPoint > 1) || (totalProcessTime < 0 || totalProcessTime > 1) || (totalDistanceTime < 0 || totalDistanceTime > 1) || (waitValue < 0 || waitValue > 1)
         return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, waitValue, sb.toString(), unitWrapper.unit.type, incident.status);
