@@ -25,7 +25,7 @@ public class ProblemData {
      */
     public static final String NO_TYPE = "0".repeat(SEVERITY_CAPABILITY_COUNT);
 
-    public static Headquarter HEADQUARTER;
+    public static Headquarter HEADQUARTER; // Initialized on another method
     public static String[] INCIDENT_NAMES = Utils.jsonToNames("Process Time and Capabilities.json", "incident_names");
     public static String[] UNIT_NAMES = Utils.jsonToNames("Process Time and Capabilities.json", "unit_names");
 
