@@ -28,7 +28,7 @@ public class Main {
         Utils.printMatrix(ProblemData.PROCESS_TIME_AND_CAPABILITIES);
         System.out.println();
 
-        SimulatedAnnealing SA = new SimulatedAnnealing(100, 0.003, ProblemData.INCIDENTS);
+        SimulatedAnnealing SA = new SimulatedAnnealing(1000, 0.0003, ProblemData.INCIDENTS);
         Solution solution = SA.run();
 
         System.out.println("********************************* RESULT *********************************");
