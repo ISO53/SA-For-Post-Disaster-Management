@@ -1,7 +1,5 @@
 package com.iso53;
 
-import java.util.Arrays;
-
 public class Incident {
 
     /**
