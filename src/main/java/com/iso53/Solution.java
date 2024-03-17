@@ -41,7 +41,7 @@ public class Solution {
         return Math.sqrt(variance); // return standard deviation
     }
 
-    public void printSolution() {
+    public void print() {
         for (int i = 0; i < solution.size(); i++) {
             System.out.print("Unit " + i + " ==>  ");
             for (Event event : solution.get(i)) {
