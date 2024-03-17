@@ -83,7 +83,7 @@ public class Scheduler {
         UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT = unnecessaryPowerfulUnitPenaltyCoefficient;
     }
 
-    public Solution schedule(Incident[] incidents, Unit[] units) {
+    public Solution schedule(Incident[] incidentsArr, Unit[] units) {
         // Initialize solution
         Solution solution = new Solution(units.length);
 
@@ -92,6 +92,9 @@ public class Scheduler {
         for (int i = 0; i < units.length; i++) {
             unitWrappers[i] = new UnitWrapper(units[i]);
         }
+
+        // Create deep copy of incidents so original data remains unchanged
+        Incident[] incidents = Utils.deepCopy(incidentsArr);
 
         // Iterate incidents
         for (int i = 0; i < incidents.length; i++) {
