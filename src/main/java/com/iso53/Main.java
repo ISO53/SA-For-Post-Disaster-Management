@@ -14,7 +14,7 @@ public class Main {
                 .sumOfNotHandledSeverityCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
                 .unnecessaryPowerfulUnitPenaltyCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
                 .build();
-        HashMap<GridSearch.Coefficient, Double> bestParameters = gridSearch.run();
+        Map<GridSearch.Coefficient, Double> bestParameters = gridSearch.run();
 
         // print the best parameters
         System.out.println("**************************** BEST PARAMETERS ***************************");
@@ -42,7 +42,7 @@ public class Main {
 
         // generic algorithm-ish
         for (int i = 0; i < size; i++) {
-            Mutation.scramble(incidentsArr);
+            Mutation.insert(incidentsArr);
             Solution solution = scheduler.schedule(Utils.deepCopy(incidentsArr), ProblemData.UNITS.clone());
             solutions.add(solution);
         }

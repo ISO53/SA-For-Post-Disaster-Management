@@ -1,8 +1,7 @@
 package com.iso53;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class GridSearch {
 
@@ -14,25 +13,30 @@ public class GridSearch {
         UNNECESSARY_POWERFUL_UNIT_PENALTY
     }
 
-    private final HashMap<Coefficient, Double> parameters;
     private final List<Double> waitCoefficients;
     private final List<Double> processTimeCoefficients;
     private final List<Double> distanceCoefficients;
     private final List<Double> sumOfNotHandledSeverityCoefficients;
     private final List<Double> unnecessaryPowerfulUnitPenaltyCoefficients;
 
-    private GridSearch(List<Double> waitCoefficients, List<Double> processTimeCoefficients, List<Double> distanceCoefficients, List<Double> sumOfNotHandledSeverityCoefficients, List<Double> unnecessaryPowerfulUnitPenaltyCoefficients) {
+    private GridSearch(List<Double> waitCoefficients,
+                       List<Double> processTimeCoefficients,
+                       List<Double> distanceCoefficients,
+                       List<Double> sumOfNotHandledSeverityCoefficients,
+                       List<Double> unnecessaryPowerfulUnitPenaltyCoefficients) {
         this.waitCoefficients = waitCoefficients;
         this.processTimeCoefficients = processTimeCoefficients;
         this.distanceCoefficients = distanceCoefficients;
         this.sumOfNotHandledSeverityCoefficients = sumOfNotHandledSeverityCoefficients;
         this.unnecessaryPowerfulUnitPenaltyCoefficients = unnecessaryPowerfulUnitPenaltyCoefficients;
-        this.parameters = new HashMap<>(5);
     }
 
-    public HashMap<Coefficient, Double> run() {
+    public Map<Coefficient, Double> run() {
         // initialized as object cuz lambda expressions must use final variables inside
-        final double[] bestScore = new double[]{Double.MAX_VALUE};
+        final List<Pair> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+
+        // Create executor for multi-thread processing
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         // Iterate over all combinations of coefficients
         for (double distanceCoefficient : distanceCoefficients) {
@@ -40,29 +44,67 @@ public class GridSearch {
                 for (double sumOfNotHandledSeverityCoefficient : sumOfNotHandledSeverityCoefficients) {
                     for (double waitCoefficient : waitCoefficients) {
                         for (double unnecessaryPowerfulUnitPenaltyCoefficient : unnecessaryPowerfulUnitPenaltyCoefficients) {
-                            // Set the coefficients
-                            Scheduler scheduler = new Scheduler(distanceCoefficient, processTimeCoefficient, sumOfNotHandledSeverityCoefficient, waitCoefficient, unnecessaryPowerfulUnitPenaltyCoefficient);
+                            executor.submit(() -> {
+                                // Set the coefficients
+                                Scheduler scheduler = new Scheduler(
+                                        distanceCoefficient,
+                                        processTimeCoefficient,
+                                        sumOfNotHandledSeverityCoefficient,
+                                        waitCoefficient,
+                                        unnecessaryPowerfulUnitPenaltyCoefficient);
 
-                            // Run the scheduler and get the score
-                            double score = scheduler.schedule(Utils.deepCopy(ProblemData.INCIDENTS.clone()), ProblemData.UNITS.clone()).getScore();
+                                // Run the scheduler and get the score
+                                double currScore = scheduler.schedule(
+                                        Utils.deepCopy(ProblemData.INCIDENTS.clone()),
+                                        ProblemData.UNITS.clone()).getScore();
 
-                            // store the best results
-                            if (score < bestScore[0]) {
-                                System.out.println(bestScore[0]);
-                                bestScore[0] = score;
-                                parameters.put(Coefficient.WAIT, waitCoefficient);
-                                parameters.put(Coefficient.DISTANCE, distanceCoefficient);
-                                parameters.put(Coefficient.PROCESS_TIME, processTimeCoefficient);
-                                parameters.put(Coefficient.SUM_OF_NOT_HANDLED_SEVERITY, sumOfNotHandledSeverityCoefficient);
-                                parameters.put(Coefficient.UNNECESSARY_POWERFUL_UNIT_PENALTY, unnecessaryPowerfulUnitPenaltyCoefficient);
-                            }
+                                // store the parameters
+                                HashMap<Coefficient, Double> currParameters = new HashMap<>();
+                                currParameters.put(Coefficient.WAIT, waitCoefficient);
+                                currParameters.put(Coefficient.DISTANCE, distanceCoefficient);
+                                currParameters.put(Coefficient.PROCESS_TIME, processTimeCoefficient);
+                                currParameters.put(Coefficient.SUM_OF_NOT_HANDLED_SEVERITY, sumOfNotHandledSeverityCoefficient);
+                                currParameters.put(Coefficient.UNNECESSARY_POWERFUL_UNIT_PENALTY, unnecessaryPowerfulUnitPenaltyCoefficient);
+
+                                // store the results
+                                synchronizedList.add(new Pair(currParameters, currScore));
+                                return null;
+                            });
                         }
                     }
                 }
             }
         }
 
-        return parameters;
+        executor.shutdown();
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Find the parameters with the lowest score
+        Pair minPair = Collections.min(synchronizedList, Comparator.comparingDouble(Pair::getScore));
+
+        return minPair.getParameters();
+    }
+
+    private static class Pair {
+        final private HashMap<Coefficient, Double> parameters;
+        final private double score;
+
+        public Pair(HashMap<Coefficient, Double> parameters, double score) {
+            this.parameters = parameters;
+            this.score = score;
+        }
+
+        public HashMap<Coefficient, Double> getParameters() {
+            return parameters;
+        }
+
+        public double getScore() {
+            return score;
+        }
     }
 
     public static class Builder {
@@ -108,7 +150,8 @@ public class GridSearch {
         }
 
         public GridSearch build() {
-            return new GridSearch(waitCoefficients, processTimeCoefficients, distanceCoefficients, sumOfNotHandledSeverityCoefficients, unnecessaryPowerfulUnitPenaltyCoefficients);
+            return new GridSearch(waitCoefficients, processTimeCoefficients, distanceCoefficients,
+                    sumOfNotHandledSeverityCoefficients, unnecessaryPowerfulUnitPenaltyCoefficients);
         }
     }
 }
