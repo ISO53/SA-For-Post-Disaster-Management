@@ -37,9 +37,8 @@ public class Solution {
 
         double mean = sum / count;
         double variance = sumOfSquares / count - Math.pow(mean, 2);
-        double standardDeviation = Math.sqrt(variance);
 
-        return standardDeviation;
+        return Math.sqrt(variance); // return standard deviation
     }
 
     public void printSolution() {
