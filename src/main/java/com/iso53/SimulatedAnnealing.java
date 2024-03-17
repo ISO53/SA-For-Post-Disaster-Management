@@ -73,7 +73,6 @@ public class SimulatedAnnealing {
         return bestSolution;
     }
 
-    // Calculate the acceptance probability
     private double acceptanceProbability(double currentEnergy, double neighbourEnergy, double temperature) {
         // If the new solution is better, accept it
         if (neighbourEnergy < currentEnergy) {
