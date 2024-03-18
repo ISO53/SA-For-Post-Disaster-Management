@@ -1,4 +1,4 @@
-package com.iso53;
+package com.iso53.algorithm;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,8 +14,12 @@ public class Solution {
         }
     }
 
-    public void add(Event event, int bestUnitIndex) {
-        this.solution.get(bestUnitIndex).add(event);
+    public void add(Event event, int unitIndex) {
+        this.solution.get(unitIndex).add(event);
+    }
+
+    public ArrayList<LinkedList<Event>> getSolution() {
+        return solution;
     }
 
     public double getScore() {
@@ -49,5 +53,23 @@ public class Solution {
             }
             System.out.println();
         }
+    }
+
+    public double getMaxLineLength() {
+        double max = Double.MIN_VALUE;
+
+        for (LinkedList<Event> events : solution) {
+            double unitScore = 0;
+
+            for (Event event : events) {
+                unitScore += event.getDistanceTime() + event.getProcessTime();
+            }
+
+            if (unitScore > max) {
+                max = unitScore;
+            }
+        }
+
+        return max;
     }
 }

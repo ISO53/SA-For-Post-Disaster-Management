@@ -1,4 +1,4 @@
-package com.iso53;
+package com.iso53.algorithm;
 
 public class Scheduler {
 

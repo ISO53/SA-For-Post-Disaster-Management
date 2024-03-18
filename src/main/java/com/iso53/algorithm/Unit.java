@@ -1,4 +1,4 @@
-package com.iso53;
+package com.iso53.algorithm;
 
 public class Unit {
 
@@ -8,6 +8,14 @@ public class Unit {
     public Unit(String type) {
         this.type = type;
         this.name = getNameFromType();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private String getNameFromType() {
