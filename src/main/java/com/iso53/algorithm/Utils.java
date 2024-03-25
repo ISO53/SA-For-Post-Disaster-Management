@@ -1,6 +1,9 @@
 package com.iso53.algorithm;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -271,22 +274,24 @@ public class Utils {
     }
 
     public static double[][] minMaxScale(double[][] matrix) {
-        // Find the minimum and maximum values
-        double min = Math.min(min(ProblemData.DISTANCE_MATRIX), min(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
-        double max = Math.max(max(ProblemData.DISTANCE_MATRIX), max(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
+        double[][] scaledMatrix = new double[matrix.length][matrix[0].length];
 
-        double range = max - min;
+        // Find the minimum and maximum values
+        ProblemData.MIN_SCALE_FACTOR = Math.min(min(ProblemData.DISTANCE_MATRIX), min(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
+        ProblemData.MAX_SCALE_FACTOR = Math.max(max(ProblemData.DISTANCE_MATRIX), max(ProblemData.PROCESS_TIME_AND_CAPABILITIES));
+
+        double range = ProblemData.MAX_SCALE_FACTOR - ProblemData.MIN_SCALE_FACTOR;
 
         // Apply min-max scaling
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] > 0) {
-                    matrix[i][j] = (matrix[i][j] - min) / range;
+                    scaledMatrix[i][j] = (matrix[i][j] - ProblemData.MIN_SCALE_FACTOR) / range;
                 }
             }
         }
 
-        return matrix;
+        return scaledMatrix;
     }
 
     public static Incident[] deepCopy(Incident[] incidentsArr) {
