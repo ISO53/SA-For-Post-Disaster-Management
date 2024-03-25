@@ -23,7 +23,7 @@ This project is a post-disaster management system that uses various algorithms t
 ## The Problem
 This study focuses on the effective allocation and scheduling problems of rescue units in emergency situations where natural disasters occur. In this process, different events, such as fires, collapsed buildings, etc., need to be urgently handled by rescue units. However, in an environment with challenging factors such as limited resources and time pressure, effective assignment and scheduling of rescue units is shaped by search and rescue and scheduling problems.
 
-## The Solution / How Does it Work?
+## The Solution and How Does it Work
 Here the Simulated Annealing algorithm is used to find an optimal solution for the scheduling problem. It starts with a random solution and then generates a new solution by making a small change to the current solution. If the new solution is better, it is accepted. If the new solution is worse, it may still be accepted with a certain probability. This allows the algorithm to escape local optima. The probability of accepting worse solutions decreases over time, allowing the algorithm to converge to an optimal solution. But how does one solution generated? The Scheduler class is responsible for generation of solutions (Which stored in Solution class).
 <br>
 Let's start with what is a solution. Solution is a ArrayList<LinkedList> type of data structure that holds incident-unit pairs. In other word, a unit choosen for each incident until all the incidents are handled. One unit can handle more than one incident. So the incidents stacks on top of each other waiting for a unit to handle them. As a result, a structure like this emerges:
