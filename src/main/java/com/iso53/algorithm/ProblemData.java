@@ -41,6 +41,9 @@ public class ProblemData {
     public static double[][] SCALED_DISTANCE_MATRIX;
     public static double[][] SCALED_PROCESS_TIME_AND_CAPABILITIES;
 
+    public static double MIN_SCALE_FACTOR;
+    public static double MAX_SCALE_FACTOR;
+
     public static void init(File processTimesFile, File incidentsFile, File unitsFile, File distanceMatrixFile) {
         LENGTH_OF_PROCESS_TIME_AND_CAPABILITIES = Utils.lengthOfProcessTimeAndCapabilities(processTimesFile);
         LENGTH_INCIDENTS_NAME = Utils.lengthOfIncidents(processTimesFile);
