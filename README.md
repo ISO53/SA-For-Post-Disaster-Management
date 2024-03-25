@@ -105,6 +105,14 @@ The first and second fields shows us the names. It is not necessary for the algo
 2. If it can handle how long does it take for a Unit(n) to handle Incident(m).
 A quick glance to this data and we can see that each unit can only handle it's own type of incidents and the more a unit is capable the less the processing time. 
 
+## Unit Types
+This file contains units in a json array. These format of these units is like this:
+```json
+{"type": "111000000"}
+```
+Type field shows the type and capability of this unit (as shown in the [bit representation](#bit-representation)).
+{"type": "111000000"}
+
 ## Bit Representation
 Units and incidents are represented as bit strings. For units, a '1' in the bit string represents a capability of the unit, and a '0' represents a lack of capability. For incidents, a '1' in the bit string represents a severity of the incident, and a '0' represents a lack of severity. This allows for efficient comparison of units and incidents. Here's how it looks:
 
