@@ -58,11 +58,14 @@ public class Solution {
     public double getMaxLineLength() {
         double max = Double.MIN_VALUE;
 
+
+        double rangeScale = ProblemData.MAX_SCALE_FACTOR - ProblemData.MIN_SCALE_FACTOR;
+
         for (LinkedList<Event> events : solution) {
             double unitScore = 0;
 
             for (Event event : events) {
-                unitScore += event.getDistanceTime() + event.getProcessTime();
+                unitScore += (event.getDistanceTime() + event.getProcessTime()) * rangeScale + 2 * ProblemData.MIN_SCALE_FACTOR;
             }
 
             if (unitScore > max) {
