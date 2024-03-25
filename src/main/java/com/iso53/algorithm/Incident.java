@@ -61,6 +61,14 @@ public class Incident {
         return this.status.substring(0, n + 1).lastIndexOf('1');
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
     @Override
     public String toString() {
         return String.format("\n(%.6f, %.6f) | Status: %s | Name: %s | Index: %d", this.lat, this.lon, this.status, this.name, this.index);
