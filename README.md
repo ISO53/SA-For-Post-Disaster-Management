@@ -16,7 +16,6 @@ This project is a post-disaster management system that uses various algorithms t
   - [Incident](#incident)
 - [Bit Representation](#bit-representation)
 - [MapBox API](#mapbox-api)
-- [Running the Program](#running-the-program)
 - [Using the Program](#using-the-program)
 - [Attribution](#attribution)
 - [License](#license)
@@ -79,7 +78,7 @@ This file contains incidents in an array. These format of these incidents is lik
 ```json
 {"status": "111000100", "latitude": 40.985, "longitude": 28.878139}
 ```
-While the status shows the type and status of the incident (as shown in the bit representation) the other two fields shows the location of the incident.
+While the status shows the type and status of the incident (as shown in the [bit representation](#bit-representation)) the other two fields shows the location of the incident.
 
 ### Process Time and Capabilities
 This json file is consists of three parts. The structure is like this:
@@ -120,8 +119,8 @@ Now let's consider the unit string "110000000". This decoded as:
 ```
 ambulance | fire-dept | rescue (shown in Process Time and Capabilities)
 1 1 0     | 0 0 0     | 0 0 0  (type for each unit)
-less,    |           |        (shows capabilities starting from left to right, less-capable to very-capable) 
-very     |           |
+less,     |           |        (shows capabilities starting from left to right,
+very      |           |         less-capable to very-capable)
 ```
 Now let's see how this Unit and Incident creates an Event.
 ```
@@ -133,8 +132,6 @@ As we can see the unit handled the types of incidents it can handle and capable.
 
 ## MapBox API
 The project uses the MapBox API for visual representation of the scheduling. The API requires an access token, which can be obtained from the MapBox website. The access token should be placed in the ACCESS_TOKEN variable in the MapBoxPanel class. The API is free for limited use but requires card information.
-
-## Running the Program 
 
 ## Using the Program
 To use the program, you need to load the distance matrix, incidents, process times, and units using the respective buttons in the GUI. Once all data is loaded, you can start the scheduling by clicking the 'START' button. The progress of the scheduling is shown in the progress bar. Once the scheduling is complete, the result is displayed in the bar chart and map visualization tabs.
