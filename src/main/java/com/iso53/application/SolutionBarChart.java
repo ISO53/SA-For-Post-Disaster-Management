@@ -1,6 +1,7 @@
 package com.iso53.application;
 
 import com.iso53.algorithm.Incident;
+import com.iso53.algorithm.ProblemData;
 import com.iso53.algorithm.Solution;
 import com.iso53.algorithm.Unit;
 
@@ -43,6 +44,10 @@ public class SolutionBarChart extends JPanel {
         int height = getHeight();
         int width = getWidth();
 
+        double minScl = ProblemData.MIN_SCALE_FACTOR;
+        double maxScl = ProblemData.MAX_SCALE_FACTOR;
+        double range = maxScl - minScl;
+
         // Set thickness
         g2.setStroke(new BasicStroke(2));
 
@@ -79,9 +84,9 @@ public class SolutionBarChart extends JPanel {
             }
         }
 
-        // variable for re-scaling the pre-scaled process and distance times
+        // scale process and distance time bars based on width
         double scale =
-                (width - (2 * MARGIN + GRAPH_MARGIN + UNIT_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH)) / solutionMaxLength;
+                (width - (2 * MARGIN + GRAPH_MARGIN + UNIT_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH)) / ((solutionMaxLength - minScl) / range);
 
         // Draw times to x-axis
         for (int i = 0; i < TIME_LINE_COUNT; i++) {
@@ -95,7 +100,7 @@ public class SolutionBarChart extends JPanel {
 
             // Draw time value
             if (solution != null) {
-                double timeValue = solutionMaxLength / TIME_LINE_COUNT * i * scale;
+                double timeValue = solutionMaxLength / TIME_LINE_COUNT * i;
                 String timeValueStr = String.format("%.2f", timeValue);
                 g2.drawString(timeValueStr, x - g2.getFontMetrics().stringWidth(timeValueStr) / 2, y1 + GRAPH_MARGIN);
             }
@@ -107,14 +112,27 @@ public class SolutionBarChart extends JPanel {
                 double totalBar = 0;
 
                 for (int j = 0; j < solution.getSolution().get(i).size(); j++) {
-                    double distanceBar = solution.getSolution().get(i).get(j).getDistanceTime() * scale;
-                    double processBar = solution.getSolution().get(i).get(j).getProcessTime() * scale;
+                    totalBar += ((solution.getSolution().get(i).get(j).getDistanceTime()) * scale)
+                            + ((solution.getSolution().get(i).get(j).getProcessTime()) * scale);
+                }
 
-                    g2.setStroke(new BasicStroke(2));
-                    g2.setColor(new Color(150, 150, 150));
-                    int x1 = (int) (MARGIN + UNIT_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH + totalBar);
-                    int x2 = (int) (x1 + distanceBar);
-                    int y = MARGIN + GRAPH_MARGIN + (height - ((MARGIN + GRAPH_MARGIN) + (MARGIN + TIME_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH + GRAPH_MARGIN))) / (units.length - 1) * i;
+                g2.setStroke(new BasicStroke(2));
+                g2.setColor(new Color(190, 190, 190));
+                int x1 = (int) (MARGIN + UNIT_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH);
+                int x2 = (int) (x1 + totalBar);
+                int y = MARGIN + GRAPH_MARGIN + (height - ((MARGIN + GRAPH_MARGIN) + (MARGIN + TIME_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH + GRAPH_MARGIN))) / (units.length - 1) * i;
+                g2.fillRect(x1, y - 10, x2 - x1, 20);
+
+                totalBar = 0;
+                for (int j = 0; j < solution.getSolution().get(i).size(); j++) {
+                    double distanceBar =
+                            (solution.getSolution().get(i).get(j).getDistanceTime()) * scale;
+                    double processBar =
+                            (solution.getSolution().get(i).get(j).getProcessTime()) * scale;
+
+                    g2.setColor(new Color(190, 190, 190));
+                    x1 = (int) (MARGIN + UNIT_INFO_SPACE + SMALL_MARGIN + SHORT_LINE_LENGTH + totalBar);
+                    x2 = (int) (x1 + distanceBar);
                     g2.fillRect(x1, y - 10, x2 - x1, 20);
                     totalBar += distanceBar;
 
