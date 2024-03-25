@@ -15,24 +15,28 @@ import java.util.concurrent.ExecutionException;
 
 public class App {
     private JPanel jpnl_backPanel;
-    private JPanel leftPanel;
-    private JPanel jpnl_rightPanel;
     private JButton jbtn_loadDistanceMatrixButton;
     private JButton jbtn_loadIncidentsButton;
     private JButton jbtn_loadProcessTimesButton;
     private JButton jbtn_loadUnitsButton;
-    private JPanel jpnl_graphPanel;
     private JButton jbtn_startButton;
     private JProgressBar jprgrsbr_progressBar;
     private JLabel jlbl_distanceMatrixLoaded;
     private JLabel jlbl_incidentsLoaded;
     private JLabel jlbl_processTimesLoaded;
     private JLabel jlbl_unitsLoaded;
+    private JPanel jpnl_barChartPanel;
+    private JPanel jpnl_mapPanel;
+    private JTabbedPane jscrlpn_mapScrollPanel;
+
+    private MapBoxPanel mapBoxPanel;
+    private SolutionBarChart solutionBarChart;
 
     private File distanceMatrixFile;
     private File incidentsFile;
     private File processTimesFile;
     private File unitsFile;
+
 
     private final Color ACCENT_COLOR = new Color(255, 152, 0);
 
@@ -45,7 +49,7 @@ public class App {
         frame.pack();
         frame.setVisible(true);
 
-        buttonListeners();
+        listeners();
     }
 
     public void checkDataLoadings() {
@@ -54,7 +58,7 @@ public class App {
         }
     }
 
-    public void buttonListeners() {
+    public void listeners() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -133,10 +137,15 @@ public class App {
 
                 ProblemData.init(processTimesFile, incidentsFile, unitsFile, distanceMatrixFile);
 
-                SolutionBarChart solutionBarChart = new SolutionBarChart(ProblemData.UNITS, ProblemData.INCIDENTS);
-                jpnl_graphPanel.setLayout(new BorderLayout());
-                jpnl_graphPanel.add(solutionBarChart, BorderLayout.CENTER);
+                solutionBarChart = new SolutionBarChart(ProblemData.UNITS, ProblemData.INCIDENTS);
+                jpnl_barChartPanel.add(solutionBarChart, BorderLayout.CENTER);
                 solutionBarChart.revalidate();
+
+                mapBoxPanel = new MapBoxPanel();
+                jpnl_mapPanel.add(mapBoxPanel);
+                mapBoxPanel.setImage();
+                mapBoxPanel.revalidate();
+                mapBoxPanel.repaint();
 
                 jprgrsbr_progressBar.setIndeterminate(true);
 
@@ -154,6 +163,13 @@ public class App {
                             solution.print();
                             jprgrsbr_progressBar.setIndeterminate(false);
                             solutionBarChart.setSolution(solution);
+                            solutionBarChart.revalidate();
+                            solutionBarChart.repaint();
+
+                            mapBoxPanel.setSolution(solution);
+                            mapBoxPanel.setImage();
+                            mapBoxPanel.revalidate();
+                            mapBoxPanel.repaint();
                         } catch (InterruptedException | ExecutionException ex) {
                             ex.printStackTrace();
                         }
@@ -163,6 +179,7 @@ public class App {
                 worker.execute();
             }
         });
+
     }
 
     public static void main(String[] args) {
