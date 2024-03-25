@@ -3,7 +3,7 @@ This project is a post-disaster management system that uses various algorithms t
 
 ## Table of Contents
 - [The Problem](#the-problem)
-- [The Solution / How Does it Work?](#the-solution-/-how-does-i-work?)
+- [The Solution and How Does it Work](#the-solution-and-how-does-it-work)
 - [Data](#data)
   - [Distance Matrix](#distance-matrix)
   - [Incident Types and Locations](#incident-types-and-locations)
