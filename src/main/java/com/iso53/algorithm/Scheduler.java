@@ -30,7 +30,8 @@ public class Scheduler {
      * incident a unit can handle on an incident. The more level the unit got or the more the severity increases the
      * more point it gets. Calculated like -> [1 + 2 + 3 + ... + n] => [n * (n + 1) / 2]
      */
-    private static final double SUM_OF_SEVERITY_CAPABILITY = (double) (ProblemData.SEVERITY_CAPABILITY_COUNT * (ProblemData.SEVERITY_CAPABILITY_COUNT + 1)) / 2;
+    private static final double SUM_OF_SEVERITY_CAPABILITY =
+            (double) (ProblemData.SEVERITY_CAPABILITY_COUNT * (ProblemData.SEVERITY_CAPABILITY_COUNT + 1)) / 2;
 
     /**
      * Used to weight the importance of the distance between the unit's location and the incident's location in the
@@ -75,7 +76,9 @@ public class Scheduler {
     /**
      * Initializes with given coefficients.
      */
-    public Scheduler(double distanceCoefficient, double processTimeCoefficient, double sumOfHandledSeverityCoefficient, double waitCoefficient, double unnecessaryPowerfulUnitPenaltyCoefficient) {
+    public Scheduler(double distanceCoefficient, double processTimeCoefficient,
+                     double sumOfHandledSeverityCoefficient, double waitCoefficient,
+                     double unnecessaryPowerfulUnitPenaltyCoefficient) {
         DISTANCE_COEFFICIENT = distanceCoefficient;
         PROCESS_TIME_COEFFICIENT = processTimeCoefficient;
         SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT = sumOfHandledSeverityCoefficient;
@@ -137,6 +140,14 @@ public class Scheduler {
             }
         }
 
+        // Return all units to headquarter
+        for (int i = 0; i < unitWrappers.length; i++) {
+            double distanceTime =
+                    ProblemData.SCALED_DISTANCE_MATRIX[unitWrappers[i].lastLocationIndex][ProblemData.HEADQUARTER.index];
+            solution.add(new Event(distanceTime, 0, 0, 0, "", "", "", ProblemData.HEADQUARTER.index,
+                    unitWrappers[i].lastLocationIndex), i);
+        }
+
         return solution;
     }
 
@@ -175,8 +186,10 @@ public class Scheduler {
             totalProcessTime = totalProcessTime / numberOfIncidentBitsHandled;
         }
 
-        // (handledSeverityPoint < 0 || handledSeverityPoint > 1) || (totalProcessTime < 0 || totalProcessTime > 1) || (totalDistanceTime < 0 || totalDistanceTime > 1) || (waitValue < 0 || waitValue > 1)
-        return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, waitValue, sb.toString(), unitWrapper.unit.type, incident.status);
+        // (handledSeverityPoint < 0 || handledSeverityPoint > 1) || (totalProcessTime < 0 || totalProcessTime > 1)
+        // || (totalDistanceTime < 0 || totalDistanceTime > 1) || (waitValue < 0 || waitValue > 1)
+        return new Event(totalDistanceTime, totalProcessTime, handledSeverityPoint, waitValue, sb.toString(),
+                unitWrapper.unit.type, incident.status, incident.index, unitWrapper.lastLocationIndex);
     }
 
     private static int findBestUnitIndex(Event[] events) {
@@ -207,25 +220,5 @@ public class Scheduler {
             this.waitTime = 0.0;
             this.lastLocationIndex = ProblemData.HEADQUARTER.index; // All units start at HQ
         }
-    }
-
-    public static double getDistanceCoefficient() {
-        return DISTANCE_COEFFICIENT;
-    }
-
-    public static double getProcessTimeCoefficient() {
-        return PROCESS_TIME_COEFFICIENT;
-    }
-
-    public static double getSumOfNotHandledSeverityCoefficient() {
-        return SUM_OF_NOT_HANDLED_SEVERITY_COEFFICIENT;
-    }
-
-    public static double getWaitCoefficient() {
-        return WAIT_COEFFICIENT;
-    }
-
-    public static double getUnnecessaryPowerfulUnitPenaltyCoefficient() {
-        return UNNECESSARY_POWERFUL_UNIT_PENALTY_COEFFICIENT;
     }
 }
