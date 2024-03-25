@@ -10,8 +10,11 @@ public class Event {
     private final double score;
     private final String unitType;
     private final String incidentStatus;
+    private final int incidentIndex;
+    private final int unitIndex;
 
-    public Event(double distanceTime, double processTime, double handledSeverityPoint, double waitValue, String result, String unitType, String incidentStatus) {
+    public Event(double distanceTime, double processTime, double handledSeverityPoint, double waitValue,
+                 String result, String unitType, String incidentStatus, int incidentIndex, int unitIndex) {
         this.distanceTime = distanceTime;
         this.processTime = processTime;
         this.handledSeverityPoint = handledSeverityPoint;
@@ -20,6 +23,8 @@ public class Event {
         this.score = calculateScore();
         this.unitType = unitType;
         this.incidentStatus = incidentStatus;
+        this.incidentIndex = incidentIndex;
+        this.unitIndex = unitIndex;
     }
 
     public double getDistanceTime() {
@@ -54,6 +59,14 @@ public class Event {
         return incidentStatus;
     }
 
+    public int getIncidentIndex() {
+        return incidentIndex;
+    }
+
+    public int getUnitIndex() {
+        return unitIndex;
+    }
+
     private double calculateScore() {
         // If this unit can't handle that incident make the result MAX because we're looking for the minimum result
         // value
@@ -69,6 +82,9 @@ public class Event {
 
     public String bar() {
         // Show distance as '_' and process as '#' character
+        if (this.processTime == 0) {
+            return ".".repeat((int) (this.distanceTime * 200) + 1);
+        }
         return ".".repeat((int) (this.distanceTime * 200) + 1) +
                 "|".repeat((int) (this.processTime * 50) + 1);
     }
