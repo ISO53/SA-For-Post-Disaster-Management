@@ -48,7 +48,7 @@ public class MapBoxPanel extends JPanel {
             revalidate();
             repaint();
         });
-        this.ACCESS_TOKEN = "pk.eyJ1IjoiaXNvNTMiLCJhIjoiY2x0eWs3bGt6MGc5NTJqczcxb3NvNzJmNSJ9.tIIbPmIlET770NxDrf9fXA";
+        this.ACCESS_TOKEN = "ACCESS_TOKEN";
         this.BASE_URL = "https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/";
         this.overlays = new ArrayList<>();
         this.zoom = 1.0;
