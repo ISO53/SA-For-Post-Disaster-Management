@@ -3,12 +3,12 @@ This project is a post-disaster management system that uses various algorithms t
 
 ## Table of Contents
 - [The Problem](#the-problem)
-- [The Solution / How Does it Work?](#the-solution)
+- [The Solution / How Does it Work?](#the-solution-/-how-does-i-work?)
 - [Data](#data)
   - [Distance Matrix](#distance-matrix)
-  - [Incident Types and Locations](#incidents)
-  - [Process Time and Capabilities](#process-times)
-  - [Unit Types](#units)
+  - [Incident Types and Locations](#incident-types-and-locations)
+  - [Process Time and Capabilities](#process-time-and-capabilities)
+  - [Unit Types](#unit-types)
 - [Classes](#classes)
   - [Event](#event)
   - [Solution](#solution)
