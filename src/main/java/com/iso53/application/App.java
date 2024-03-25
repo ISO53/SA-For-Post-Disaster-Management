@@ -63,8 +63,6 @@ public class App {
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON files", "json"));
-        fileChooser.setCurrentDirectory(new File("C:\\Users\\termi\\Documents\\Projects\\SchoolProjects\\SA-For-Post" +
-                "-Disaster-Management\\src\\main\\resources"));
 
         jbtn_loadDistanceMatrixButton.addMouseListener(new MouseAdapter() {
             @Override
