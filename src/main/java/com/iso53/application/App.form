@@ -142,7 +142,14 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <tabbedpane id="18029" binding="jtbbdpn_unitsPane">
+                    <constraints border-constraint="Center"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </tabbedpane>
+                </children>
               </grid>
             </children>
           </tabbedpane>
