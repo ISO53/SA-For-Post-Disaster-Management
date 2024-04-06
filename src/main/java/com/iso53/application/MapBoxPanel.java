@@ -38,11 +38,11 @@ public class MapBoxPanel extends JPanel {
         this.addMouseWheelListener(e -> {
             if (e.getPreciseWheelRotation() < 0) {
                 if (zoom < 2.5) {
-                    zoom += 0.01;
+                    zoom += 0.025;
                 }
             } else {
                 if (zoom > 0.25) {
-                    zoom -= 0.01;
+                    zoom -= 0.025;
                 }
             }
             revalidate();
