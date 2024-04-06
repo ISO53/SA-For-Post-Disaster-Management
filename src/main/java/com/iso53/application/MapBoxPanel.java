@@ -88,24 +88,21 @@ public class MapBoxPanel extends JPanel {
         }
     }
 
-    public void setSolution(Solution solution) {
-        for (LinkedList<Event> events : solution.getSolution()) {
-            double[][] locations = new double[events.size()][2];
+    public void setUnitSolution(LinkedList<Event> events) {
+        double[][] locations = new double[events.size()][2];
 
-            for (int i = 0; i < locations.length; i++) {
-                int unitLocIndex = events.get(i).getUnitIndex();
-                if (unitLocIndex == ProblemData.INCIDENTS.length) {
-                    locations[i][0] = ProblemData.HEADQUARTER.lat;
-                    locations[i][1] = ProblemData.HEADQUARTER.lon;
-                } else {
-                    locations[i][0] = ProblemData.INCIDENTS[unitLocIndex].getLat();
-                    locations[i][1] = ProblemData.INCIDENTS[unitLocIndex].getLon();
-                }
+        for (int i = 0; i < locations.length; i++) {
+            int unitLocIndex = events.get(i).getUnitIndex();
+            if (unitLocIndex == ProblemData.INCIDENTS.length) {
+                locations[i][0] = ProblemData.HEADQUARTER.lat;
+                locations[i][1] = ProblemData.HEADQUARTER.lon;
+            } else {
+                locations[i][0] = ProblemData.INCIDENTS[unitLocIndex].getLat();
+                locations[i][1] = ProblemData.INCIDENTS[unitLocIndex].getLon();
             }
-
-            overlays.add(new Path(randomHexColor(), locations));
-            break;
         }
+
+        overlays.add(new Path(randomHexColor(), locations));
     }
 
     private BufferedImage getMapImage() throws IOException {
