@@ -22,6 +22,10 @@ public class Solution {
         return solution;
     }
 
+    public LinkedList<Event> getSolution(int i) {
+        return solution.get(i);
+    }
+
     public double getScore() {
         double sum = 0;
         double sumOfSquares = 0;
