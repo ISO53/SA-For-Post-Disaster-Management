@@ -28,8 +28,9 @@ public class App {
     private JPanel jpnl_barChartPanel;
     private JPanel jpnl_mapPanel;
     private JTabbedPane jscrlpn_mapScrollPanel;
+    private JTabbedPane jtbbdpn_unitsPane;
 
-    private MapBoxPanel mapBoxPanel;
+//    private MapBoxPanel mapBoxPanel;
     private SolutionBarChart solutionBarChart;
 
     private File distanceMatrixFile;
@@ -63,6 +64,8 @@ public class App {
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON files", "json"));
+        fileChooser.setCurrentDirectory(new File("C:\\Users\\termi\\Documents\\Projects\\SchoolProjects\\SA-For-Post" +
+                "-Disaster-Management\\src\\main\\resources"));
 
         jbtn_loadDistanceMatrixButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -139,18 +142,12 @@ public class App {
                 jpnl_barChartPanel.add(solutionBarChart, BorderLayout.CENTER);
                 solutionBarChart.revalidate();
 
-                mapBoxPanel = new MapBoxPanel();
-                jpnl_mapPanel.add(mapBoxPanel);
-                mapBoxPanel.setImage();
-                mapBoxPanel.revalidate();
-                mapBoxPanel.repaint();
-
                 jprgrsbr_progressBar.setIndeterminate(true);
 
                 SwingWorker<Solution, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Solution doInBackground() {
-                        SimulatedAnnealing SA = new SimulatedAnnealing(1000, 0.0003, ProblemData.INCIDENTS);
+                        SimulatedAnnealing SA = new SimulatedAnnealing(10000, 0.0003, ProblemData.INCIDENTS);
                         return SA.run();
                     }
 
@@ -164,10 +161,20 @@ public class App {
                             solutionBarChart.revalidate();
                             solutionBarChart.repaint();
 
-                            mapBoxPanel.setSolution(solution);
-                            mapBoxPanel.setImage();
-                            mapBoxPanel.revalidate();
-                            mapBoxPanel.repaint();
+                            jtbbdpn_unitsPane.removeAll();
+                            for (int i = 0; i < ProblemData.UNITS.length; i++) {
+                                MapBoxPanel mapBoxPanel = new MapBoxPanel();
+                                mapBoxPanel.setUnitSolution(solution.getSolution(i));
+
+                                jtbbdpn_unitsPane.addTab("Unit " + i + ": " + ProblemData.UNITS[i].getName()
+                                        .replace("~", "")
+                                        .replace(",", "")
+                                        .replace(" ", ""), mapBoxPanel);
+
+                                mapBoxPanel.setImage();
+                                mapBoxPanel.revalidate();
+                                mapBoxPanel.repaint();
+                            }
                         } catch (InterruptedException | ExecutionException ex) {
                             ex.printStackTrace();
                         }
