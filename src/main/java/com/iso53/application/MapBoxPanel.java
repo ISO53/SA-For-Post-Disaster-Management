@@ -174,7 +174,7 @@ public class MapBoxPanel extends JPanel {
 
         @Override
         String getAsString() {
-            return String.format(Locale.US, "path-3+%s(%s)", color, encodedPolyline);
+            return String.format(Locale.US, "path-2+%s(%s)", color, encodedPolyline);
         }
     }
 }
