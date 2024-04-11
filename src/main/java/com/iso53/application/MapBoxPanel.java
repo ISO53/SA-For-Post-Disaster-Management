@@ -5,11 +5,10 @@ import com.google.maps.model.LatLng;
 import com.iso53.algorithm.Event;
 import com.iso53.algorithm.Incident;
 import com.iso53.algorithm.ProblemData;
-import com.iso53.algorithm.Solution;
+import org.iso53.InteractiveImagePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +17,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
-import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-public class MapBoxPanel extends JPanel {
+public class MapBoxPanel extends InteractiveImagePanel {
 
     private final String BASE_URL;
     private final String ACCESS_TOKEN;
@@ -31,61 +30,15 @@ public class MapBoxPanel extends JPanel {
     private final String BLUE = "0000ff";
     private final String ORANGE = "ff9800";
 
-    private double zoom;
-    private BufferedImage image;
-
     public MapBoxPanel() {
-        this.addMouseWheelListener(e -> {
-            if (e.getPreciseWheelRotation() < 0) {
-                if (zoom < 2.5) {
-                    zoom += 0.025;
-                }
-            } else {
-                if (zoom > 0.25) {
-                    zoom -= 0.025;
-                }
-            }
-            revalidate();
-            repaint();
-        });
-        this.ACCESS_TOKEN = "ACCESS_TOKEN";
+        this.ACCESS_TOKEN = "pk.eyJ1IjoiaXNvNTMiLCJhIjoiY2x0eWtzMTRoMGdmODJqczdwenYzNmN0ZiJ9.kSKTWBBwDKtGM-vL7zp7nQ";
         this.BASE_URL = "https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/";
         this.overlays = new ArrayList<>();
-        this.zoom = 1.0;
 
         for (Incident incident : ProblemData.INCIDENTS) {
             overlays.add(new Marker(incident.getLat(), incident.getLon(), RED, "i"));
         }
         overlays.add(new Marker(ProblemData.HEADQUARTER.lat, ProblemData.HEADQUARTER.lon, GREEN, "h"));
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        if (image != null) {
-            g.drawImage(
-                    image.getScaledInstance(
-                            (int) (image.getWidth() * zoom),
-                            (int) (image.getHeight() * zoom),
-                            Image.SCALE_FAST),
-                    0,
-                    0,
-                    this);
-        }
-    }
-
-    @Override
-    public void revalidate() {
-        super.revalidate();
-    }
-
-    public void setImage() {
-        try {
-            this.image = getMapImage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setUnitSolution(LinkedList<Event> events) {
@@ -102,7 +55,7 @@ public class MapBoxPanel extends JPanel {
             }
         }
 
-        overlays.add(new Path(randomHexColor(), locations));
+        overlays.add(new Path(ORANGE, locations));
     }
 
     private BufferedImage getMapImage() throws IOException {
@@ -111,6 +64,26 @@ public class MapBoxPanel extends JPanel {
         conn.setRequestMethod("GET");
         InputStream in = conn.getInputStream();
         return ImageIO.read(in);
+    }
+
+    public void setImage() {
+        SwingWorker<BufferedImage, Void> worker = new SwingWorker<>() {
+            @Override
+            protected BufferedImage doInBackground() throws Exception {
+                return getMapImage();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    BufferedImage img = get();
+                    MapBoxPanel.this.setImage(img);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        worker.execute();
     }
 
     private String buildRequestString() {
@@ -124,15 +97,6 @@ public class MapBoxPanel extends JPanel {
                 Math.max(Math.min(getParent().getWidth(), 1280), 1),
                 Math.max(Math.min(getParent().getHeight(), 1280), 1),
                 ACCESS_TOKEN);
-    }
-
-    public String randomHexColor() {
-        Random random = new Random();
-        float hue = random.nextFloat();
-        float saturation = 1.0f; // Maximum saturation
-        float brightness = 1.0f; // Maximum brightness
-        Color color = Color.getHSBColor(hue, saturation, brightness);
-        return String.format("%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 
     private abstract static class Overlay {

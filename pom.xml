@@ -39,6 +39,12 @@
             <version>2.2.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.iso53</groupId>
+            <artifactId>interactive-image-panel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

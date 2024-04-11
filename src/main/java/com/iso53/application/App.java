@@ -172,6 +172,8 @@ public class App {
                                         .replace(" ", ""), mapBoxPanel);
 
                                 mapBoxPanel.setImage();
+                                mapBoxPanel.addZoomCapability();
+                                mapBoxPanel.addMoveCapability();
                                 mapBoxPanel.revalidate();
                                 mapBoxPanel.repaint();
                             }
