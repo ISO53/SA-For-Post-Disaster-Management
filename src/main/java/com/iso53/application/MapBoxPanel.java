@@ -31,7 +31,7 @@ public class MapBoxPanel extends InteractiveImagePanel {
     private final String ORANGE = "ff9800";
 
     public MapBoxPanel() {
-        this.ACCESS_TOKEN = "pk.eyJ1IjoiaXNvNTMiLCJhIjoiY2x0eWtzMTRoMGdmODJqczdwenYzNmN0ZiJ9.kSKTWBBwDKtGM-vL7zp7nQ";
+        this.ACCESS_TOKEN = "ACCESS_TOKEN";
         this.BASE_URL = "https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/";
         this.overlays = new ArrayList<>();
 
