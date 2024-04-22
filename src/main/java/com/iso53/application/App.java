@@ -172,6 +172,7 @@ public class App {
                                 mapBoxPanel.setImage();
                                 mapBoxPanel.addZoomCapability();
                                 mapBoxPanel.addMoveCapability();
+                                mapBoxPanel.setImageFit(InteractiveImagePanel.IMAGE_FIT.COVER);
                                 mapBoxPanel.revalidate();
                                 mapBoxPanel.repaint();
                             }
