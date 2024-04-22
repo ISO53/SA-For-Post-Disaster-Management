@@ -87,6 +87,8 @@ public class MapBoxPanel extends InteractiveImagePanel {
     }
 
     private String buildRequestString() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         return String.format(
                 Locale.US,
                 "%s%s/auto/%dx%d@2x?access_token=%s",
@@ -94,8 +96,8 @@ public class MapBoxPanel extends InteractiveImagePanel {
                 overlays.stream()
                         .map(Overlay::getAsString)
                         .collect(Collectors.joining(",")),
-                Math.max(Math.min(getParent().getWidth(), 1280), 1),
-                Math.max(Math.min(getParent().getHeight(), 1280), 1),
+                (int) Math.max(Math.min(screenSize.getWidth(), 1280), 1),
+                (int) Math.max(Math.min(screenSize.getHeight(), 1280), 1),
                 ACCESS_TOKEN);
     }
 
