@@ -1,5 +1,8 @@
 package com.iso53.application;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.maps.internal.PolylineEncoding;
 import com.google.maps.model.LatLng;
 import com.iso53.algorithm.Event;
@@ -9,12 +12,16 @@ import org.iso53.InteractiveImagePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
@@ -27,11 +34,12 @@ public class MapBoxPanel extends InteractiveImagePanel {
     private final ArrayList<Overlay> overlays;
     private final String RED = "ff0000";
     private final String GREEN = "006400";
-    private final String BLUE = "0000ff";
+    private final String YELLOW = "ffff00";
     private final String ORANGE = "ff9800";
 
     public MapBoxPanel() {
-        this.ACCESS_TOKEN = "ACCESS_TOKEN";
+        // DON'T PUSH THIS LINE TO GITHUB !!!
+        this.ACCESS_TOKEN = "pk.eyJ1IjoiaXNvNTMiLCJhIjoiY2x2NndpMzIyMDM3NTJrcWltcmt2bWVhciJ9.lHDfJfK_XCnRHkWqtyeRLw";
         this.BASE_URL = "https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/";
         this.overlays = new ArrayList<>();
 
@@ -41,10 +49,43 @@ public class MapBoxPanel extends InteractiveImagePanel {
         overlays.add(new Marker(ProblemData.HEADQUARTER.lat, ProblemData.HEADQUARTER.lon, GREEN, "h"));
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Cast Graphics to Graphics2D for better rendering
+        Graphics2D g2d = (Graphics2D) g;
+
+        // Define the radius and initial position for the oval
+        int radius = 15;
+        int initialX = 10;
+        int initialY = 10;
+
+        // Define the strings to be displayed
+        String[] strings = { "Starting Path", "Path", "End Path" };
+        Color[] colors = { Color.decode("#" + RED), Color.decode("#" + ORANGE), Color.decode("#" + YELLOW) };
+
+        // Draw the strings and the ovals
+        for (int i = 0; i < strings.length; i++) {
+            g2d.setColor(colors[i]);
+            g2d.fillOval(initialX, initialY + i * (radius + 20), radius, radius);
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(strings[i], initialX + radius + 10, initialY + i * (radius + 20) + 10);
+        }
+    }
+
     public void setUnitSolution(LinkedList<Event> events) {
-        double[][] locations = new double[events.size()][2];
+        double[][] locations = new double[events.size() + 1][2];
+        System.out.println(locations.length);
 
         for (int i = 0; i < locations.length; i++) {
+            // Return back to HEADQUARTER once finished
+            if (i == locations.length - 1) {
+                locations[i][0] = ProblemData.HEADQUARTER.lat;
+                locations[i][1] = ProblemData.HEADQUARTER.lon;
+                break;
+            }
+
             int unitLocIndex = events.get(i).getUnitIndex();
             if (unitLocIndex == ProblemData.INCIDENTS.length) {
                 locations[i][0] = ProblemData.HEADQUARTER.lat;
@@ -56,6 +97,8 @@ public class MapBoxPanel extends InteractiveImagePanel {
         }
 
         overlays.add(new Path(ORANGE, locations));
+        overlays.add(new Path(RED, Arrays.copyOfRange(locations, 0, 2)));
+        overlays.add(new Path(YELLOW, Arrays.copyOfRange(locations, locations.length - 2, locations.length)));
     }
 
     private BufferedImage getMapImage() throws IOException {
