@@ -9,15 +9,10 @@ This project is a post-disaster management system that uses various algorithms t
   - [Incident Types and Locations](#incident-types-and-locations)
   - [Process Time and Capabilities](#process-time-and-capabilities)
   - [Unit Types](#unit-types)
-- [Classes](#classes)
-  - [Event](#event)
-  - [Solution](#solution)
-  - [Unit](#unit)
-  - [Incident](#incident)
 - [Bit Representation](#bit-representation)
 - [MapBox API](#mapbox-api)
 - [Using the Program](#using-the-program)
-- [Attribution](#attribution)
+- [Screenshots](#screenshots)
 - [License](#license)
 
 ## The Problem
@@ -143,6 +138,11 @@ The project uses the MapBox API for visual representation of the scheduling. The
 
 ## Using the Program
 To use the program, you need to load the distance matrix, incidents, process times, and units using the respective buttons in the GUI. Once all data is loaded, you can start the scheduling by clicking the 'START' button. The progress of the scheduling is shown in the progress bar. Once the scheduling is complete, the result is displayed in the bar chart and map visualization tabs.
+
+## Screenshots
+![image](https://github.com/ISO53/SA-For-Post-Disaster-Management/assets/102249575/39cadfcb-98aa-45ca-bbcd-887ffe953c4c)
+
+![image](https://github.com/ISO53/SA-For-Post-Disaster-Management/assets/102249575/30c2c8a6-a237-4eb7-8b9f-8481ce468133)
 
 ## Contributing
    Your contributions are valued! We appreciate your cooperation in making our project better.
