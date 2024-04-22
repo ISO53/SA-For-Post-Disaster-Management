@@ -1,5 +1,8 @@
 package com.iso53.algorithm;
 
+import com.iso53.mutation.InsertAlgorithm;
+import com.iso53.mutation.InversionAlgorithm;
+import com.iso53.mutation.MutationAlgorithm;
 import java.util.Map;
 import java.util.Random;
 
@@ -9,12 +12,14 @@ public class SimulatedAnnealing {
     private final Random random;
     private final Incident[] incidents;
     private double temperature;
+    private MutationAlgorithm mutationAlgorithm;
 
     public SimulatedAnnealing(double temperature, double coolingRate, Incident[] incidents) {
         this.temperature = temperature;
         this.coolingRate = coolingRate;
         this.incidents = Utils.deepCopy(incidents);
         this.random = new Random();
+        setAlgorithm(new InsertAlgorithm());
     }
 
     public Solution run() {
@@ -48,7 +53,7 @@ public class SimulatedAnnealing {
 
         while (temperature > 1) {
             // create new incidents arr for new solution
-            Incident[] newIncidents = Mutation.insert(currIncidents);
+            Incident[] newIncidents = (Incident[]) mutationAlgorithm.mutate(currIncidents);
             Solution newSolution = scheduler.schedule(newIncidents, ProblemData.UNITS.clone());
 
             // Get energy of solutions
@@ -80,5 +85,9 @@ public class SimulatedAnnealing {
         }
         // If the new solution is worse, calculate an acceptance probability
         return Math.exp((currentEnergy - neighbourEnergy) / temperature);
+    }
+
+    public void setAlgorithm(MutationAlgorithm mutationAlgorithm) {
+        this.mutationAlgorithm = mutationAlgorithm;
     }
 }
