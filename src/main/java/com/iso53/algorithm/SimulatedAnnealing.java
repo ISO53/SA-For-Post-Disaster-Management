@@ -3,6 +3,10 @@ package com.iso53.algorithm;
 import com.iso53.mutation.InsertAlgorithm;
 import com.iso53.mutation.InversionAlgorithm;
 import com.iso53.mutation.MutationAlgorithm;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -51,6 +55,9 @@ public class SimulatedAnnealing {
         // create first solution
         Solution bestSolution = scheduler.schedule(currIncidents, ProblemData.UNITS.clone());
 
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.0000", symbols);
+
         while (temperature > 1) {
             // create new incidents arr for new solution
             Incident[] newIncidents = (Incident[]) mutationAlgorithm.mutate(currIncidents);
@@ -70,6 +77,8 @@ public class SimulatedAnnealing {
             if (newSolution.getScore() < bestSolution.getScore()) {
                 bestSolution = newSolution;
             }
+
+//            System.out.println(df.format(currSolution.getScore()) + " ,");
 
             // Cool system
             temperature *= 1 - coolingRate;

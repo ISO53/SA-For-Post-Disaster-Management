@@ -4,6 +4,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDarker
 import com.iso53.algorithm.ProblemData;
 import com.iso53.algorithm.SimulatedAnnealing;
 import com.iso53.algorithm.Solution;
+import org.iso53.InteractiveImagePanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,7 +15,7 @@ import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 public class App {
-    private JPanel jpnl_backPanel;
+    private JPanel jpnl_appBackPanel;
     private JButton jbtn_loadDistanceMatrixButton;
     private JButton jbtn_loadIncidentsButton;
     private JButton jbtn_loadProcessTimesButton;
@@ -36,12 +37,12 @@ public class App {
     private File incidentsFile;
     private File processTimesFile;
     private File unitsFile;
-    
+
     private final Color ACCENT_COLOR = new Color(255, 152, 0);
 
     public App() {
         JFrame frame = new JFrame("Post Disaster Management");
-        frame.setContentPane(jpnl_backPanel);
+        frame.setContentPane(jpnl_appBackPanel);
         frame.setMinimumSize(new Dimension(800, 600));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
