@@ -146,7 +146,7 @@ public class App {
                 SwingWorker<Solution, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Solution doInBackground() {
-                        SimulatedAnnealing SA = new SimulatedAnnealing(10000, 0.0003, ProblemData.INCIDENTS);
+                        SimulatedAnnealing SA = new SimulatedAnnealing(10000, 0.098, ProblemData.INCIDENTS);
                         return SA.run();
                     }
 
