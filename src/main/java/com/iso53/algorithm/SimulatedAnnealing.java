@@ -28,23 +28,25 @@ public class SimulatedAnnealing {
 
     public Solution run() {
         // use grid search to find the best parameters for scheduler
-        GridSearch gridSearch = new GridSearch.Builder()
-                .waitCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
-                .processTimeCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
-                .distanceCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
-                .sumOfNotHandledSeverityCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
-                .unnecessaryPowerfulUnitPenaltyCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
-                .build();
-        Map<GridSearch.Coefficient, Double> bestParameters = gridSearch.run();
+//        GridSearch gridSearch = new GridSearch.Builder()
+//                .waitCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+//                .processTimeCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+//                .distanceCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+//                .sumOfNotHandledSeverityCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+//                .unnecessaryPowerfulUnitPenaltyCoefficient(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+//                .build();
+//        Map<GridSearch.Coefficient, Double> bestParameters = gridSearch.run();
 
         // initialize the Scheduler object with best parameters
-        Scheduler scheduler = new Scheduler(
-                bestParameters.get(GridSearch.Coefficient.DISTANCE),
-                bestParameters.get(GridSearch.Coefficient.PROCESS_TIME),
-                bestParameters.get(GridSearch.Coefficient.SUM_OF_NOT_HANDLED_SEVERITY),
-                bestParameters.get(GridSearch.Coefficient.WAIT),
-                bestParameters.get(GridSearch.Coefficient.UNNECESSARY_POWERFUL_UNIT_PENALTY)
-        );
+//        Scheduler scheduler = new Scheduler(
+//                bestParameters.get(GridSearch.Coefficient.DISTANCE),
+//                bestParameters.get(GridSearch.Coefficient.PROCESS_TIME),
+//                bestParameters.get(GridSearch.Coefficient.SUM_OF_NOT_HANDLED_SEVERITY),
+//                bestParameters.get(GridSearch.Coefficient.WAIT),
+//                bestParameters.get(GridSearch.Coefficient.UNNECESSARY_POWERFUL_UNIT_PENALTY)
+//        );
+
+        Scheduler scheduler = new Scheduler(0.25, 0.15, 0.25, 0.2, 0.15);
 
         // create incidents arr for first solution
         Incident[] currIncidents = this.incidents;
@@ -78,7 +80,7 @@ public class SimulatedAnnealing {
                 bestSolution = newSolution;
             }
 
-//            System.out.println(df.format(currSolution.getScore()) + " ,");
+            System.out.print(df.format(bestSolution.getScore()) + " ,");
 
             // Cool system
             temperature *= 1 - coolingRate;
