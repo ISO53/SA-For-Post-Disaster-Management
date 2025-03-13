@@ -2,6 +2,7 @@
 This project is a post-disaster management system that uses various algorithms to schedule units to handle incidents. The system uses bit representation for units and incidents, and calculates scores based on various factors such as distance, process time, and severity of incidents. The project also uses the MapBox API for visual representation of the scheduling.
 
 ## Table of Contents
+- [The Paper](#the-paper)
 - [The Problem](#the-problem)
 - [The Solution and How Does it Work](#the-solution-and-how-does-it-work)
 - [Data](#data)
@@ -14,6 +15,9 @@ This project is a post-disaster management system that uses various algorithms t
 - [Using the Program](#using-the-program)
 - [Screenshots](#screenshots)
 - [License](#license)
+
+## The Paper
+You can view my published paper on this subject by clicking [here](https://hdl.handle.net/11352/5158).
 
 ## The Problem
 This study focuses on the effective allocation and scheduling problems of rescue units in emergency situations where natural disasters occur. In this process, different events, such as fires, collapsed buildings, etc., need to be urgently handled by rescue units. However, in an environment with challenging factors such as limited resources and time pressure, effective assignment and scheduling of rescue units is shaped by search and rescue and scheduling problems.
