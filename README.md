@@ -17,7 +17,7 @@ This project is a post-disaster management system that uses various algorithms t
 - [License](#license)
 
 ## The Paper
-You can view my published paper on this subject by clicking [here](https://hdl.handle.net/11352/5158).
+You can view my published paper on this subject by clicking [here](https://acikerisim.fsm.edu.tr/xmlui/handle/11352/5158).
 
 ## The Problem
 This study focuses on the effective allocation and scheduling problems of rescue units in emergency situations where natural disasters occur. In this process, different events, such as fires, collapsed buildings, etc., need to be urgently handled by rescue units. However, in an environment with challenging factors such as limited resources and time pressure, effective assignment and scheduling of rescue units is shaped by search and rescue and scheduling problems.
